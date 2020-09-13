@@ -6,22 +6,11 @@ import 'package:FriendFinder/components/rounded_button.dart';
 import 'package:FriendFinder/components/rounded_input_field.dart';
 import 'package:FriendFinder/components/rounded_password_field.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:http/http.dart' as http;
 
-
-class Body extends StatefulWidget {
-  Body({
+class Body extends StatelessWidget {
+  const Body({
     Key key,
   }) : super(key: key);
-
-  @override
-  _BodyState createState() => _BodyState();
-}
-
-class _BodyState extends State<Body> {
-  String email;
-
-  String password;
 
   @override
   Widget build(BuildContext context) {
@@ -43,21 +32,14 @@ class _BodyState extends State<Body> {
             SizedBox(height: size.height * 0.03),
             RoundedInputField(
               hintText: "Your Email",
-              onChanged: (value) {
-                email = value;
-              },
+              onChanged: (value) {},
             ),
             RoundedPasswordField(
-              onChanged: (value) {
-                password = value;
-              },
+              onChanged: (value) {},
             ),
             RoundedButton(
               text: "LOGIN",
-              press: () {
-                print(email);
-                
-              },
+              press: () {},
             ),
             SizedBox(height: size.height * 0.03),
             AlreadyHaveAnAccountCheck(
