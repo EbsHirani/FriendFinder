@@ -1,6 +1,7 @@
+import 'package:FriendFinder/Screens/Registration/registration.dart';
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/material.dart';
-// import 'package:FriendFinder/Screens/Welcome/welcome_screen.dart';
+import 'package:FriendFinder/Screens/Welcome/welcome_screen.dart';
 import 'package:FriendFinder/constants.dart';
 import 'package:FriendFinder/Screens/User_Profile/user_profile.dart';
 
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
           //   scaffoldBackgroundColor: Colors.white,
           // ),
           theme: ThemeProvider.of(context),
-          home: UserProfile(),
+          home: Registration(),
         );
       }),
     );

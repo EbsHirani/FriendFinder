@@ -13,6 +13,8 @@ class RoundedPasswordField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFieldContainer(
       child: TextField(
+        style: TextStyle(color: Colors.black),
+
         obscureText: true,
         onChanged: onChanged,
         cursorColor: kPrimaryColor,
