@@ -1,3 +1,4 @@
+import 'package:FriendFinder/Screens/ChatScreen/chat_screen.dart';
 import 'package:FriendFinder/Screens/Registration/registration.dart';
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
           //   scaffoldBackgroundColor: Colors.white,
           // ),
           theme: ThemeProvider.of(context),
-          home: Registration(),
+          home: ChatScreen(),
         );
       }),
     );
