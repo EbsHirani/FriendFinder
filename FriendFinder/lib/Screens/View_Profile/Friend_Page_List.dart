@@ -4,14 +4,14 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:FriendFinder/models/chat_model.dart';
 
-class ChatScreen extends StatefulWidget {
+class FriendsListScreen extends StatefulWidget {
   @override
-  ChatScreenState createState() {
-    return new ChatScreenState();
+  FriendsListScreenState createState() {
+    return new FriendsListScreenState();
   }
 }
 
-class ChatScreenState extends State<ChatScreen> {
+class FriendsListScreenState extends State<FriendsListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

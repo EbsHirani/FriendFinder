@@ -7,35 +7,36 @@ class Friend {
     @required this.name,
     @required this.email,
     @required this.location,
+    @required this.friendsCount,
+    @required this.desc
   });
 
   final String avatar;
   final String name;
   final String email;
   final String location;
+  final int friendsCount;
+  final String desc;
 
-  static List<Friend> allFromResponse(String response) {
-    var decodedJson = json.decode(response).cast<String, dynamic>();
-
-    return decodedJson['results']
-        .cast<Map<String, dynamic>>()
-        .map((obj) => Friend.fromMap(obj))
-        .toList()
-        .cast<Friend>();
+  List<String> likings = [
+    "absd",
+      "afasd",
+      "adjkfa",
+  ];
+  void fromMap(Map map) {
+    likings = [
+      "absd",
+      "afasd",
+      "adjkfa",
+    ];
+  }
   }
 
-  static Friend fromMap(Map map) {
-    var name = map['name'];
+  // Friend fromMap(Map map) {
+  //   likings = 
+  // }
 
-    return new Friend(
-      avatar: map['picture']['large'],
-      name: '${_capitalize(name['first'])} ${_capitalize(name['last'])}',
-      email: map['email'],
-      location: _capitalize(map['location']['state']),
-    );
-  }
-
-  static String _capitalize(String input) {
+  String _capitalize(String input) {
     return input.substring(0, 1).toUpperCase() + input.substring(1);
   }
-}
+

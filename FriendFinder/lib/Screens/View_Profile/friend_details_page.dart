@@ -7,10 +7,12 @@ import 'package:meta/meta.dart';
 
 class FriendDetailsPage extends StatefulWidget {
   FriendDetailsPage(
+
     this.friend, {
+      this.friendStatus,
     @required this.avatarTag,
   });
-
+  final String friendStatus;
   final Friend friend;
   final Object avatarTag;
 
@@ -33,23 +35,24 @@ class _FriendDetailsPageState extends State<FriendDetailsPage> {
     );
 
     return new Scaffold(
-      body: new SingleChildScrollView(
-        child: new Container(
-          decoration: linearGradient,
-          child: new Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              new FriendDetailHeader(
-                widget.friend,
-                avatarTag: widget.avatarTag,
-              ),
-              new Padding(
+      body: new Container(
+        decoration: linearGradient,
+        child: new Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            new FriendDetailHeader(
+              widget.friend,
+              friendStatus: widget.friendStatus,
+              avatarTag: widget.avatarTag,
+            ),
+            Expanded(
+              child: new Padding(
                 padding: const EdgeInsets.all(24.0),
                 child: new FriendDetailBody(widget.friend),
               ),
-              // new FriendShowcase(widget.friend),
-            ],
-          ),
+            ),
+            // new FriendShowcase(widget.friend),
+          ],
         ),
       ),
     );

@@ -1,0 +1,85 @@
+
+import 'package:FriendFinder/Screens/ChatScreen/chat_screen.dart';
+import 'package:FriendFinder/Screens/User_Profile/user_profile.dart';
+import 'package:FriendFinder/Screens/View_Profile/Friend_Page_List.dart';
+import 'package:FriendFinder/Screens/View_Profile/friend_details_page.dart';
+import 'package:flutter/material.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+
+import 'Screens/View_Profile/friends/friend.dart';
+// import 'admissions/admission.dart';
+// import 'exploration_tab/exploration.dart';
+// import 'profile.dart';
+// import 'dashboard.dart';
+
+class BottomNavigation extends StatefulWidget {
+  String uid;
+  BottomNavigation({this.uid});
+  @override
+  _BottomNavigationState createState() => _BottomNavigationState(uid:uid);
+}
+
+class _BottomNavigationState extends State<BottomNavigation> with SingleTickerProviderStateMixin{
+
+  String uid;
+  _BottomNavigationState({this.uid});
+  int _page = 0;
+
+  var _pageOption;
+  @override
+  void initState() {
+    Friend friend = Friend(avatar: "https://miro.medium.com/max/945/1*ilC2Aqp5sZd1wi0CopD1Hw.png",
+     name: "Varun Magotra",
+      email: "maimadarchodhu@gmaal.com", 
+      location: "Dilli se hu benchod", 
+      friendsCount: 20,
+      desc: 'Lorem Ipsum is simply dummy text of the printing and typesetting ',
+            
+      );
+    // TODO: implement initState
+    super.initState();
+    _pageOption =  [
+      ChatScreen(),
+      FriendsListScreen(),
+      FriendDetailsPage(friend,
+            avatarTag :'imageHero',
+            friendStatus: "Add Friend",
+          ),
+      UserProfile(),
+    ];
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      bottomNavigationBar: CurvedNavigationBar(
+        //key: _bottomNavigationKey,
+        index: 0,
+        height: 45.0,
+        items: <Widget>[
+          Icon(Icons.home, size: 20, color: Colors.white,),
+          Icon(Icons.explore, size: 20, color: Colors.white,),
+          Icon(Icons.edit, size: 20, color: Colors.white,),
+          Icon(Icons.account_circle, size: 20, color: Colors.white,),
+          //Icon(Icons.perm_identity, size: 30),
+        ],
+        color: Colors.black87,
+        buttonBackgroundColor: Colors.black87,
+        backgroundColor: Colors.white,
+        animationCurve: Curves.easeInOut,
+        animationDuration: Duration(milliseconds: 600),
+        onTap: (index) {
+          setState(() {
+            _page = index;
+          });
+        },
+      ),
+
+      body: IndexedStack(
+        index: _page,
+        children: _pageOption,
+      ),
+    );
+  }
+}

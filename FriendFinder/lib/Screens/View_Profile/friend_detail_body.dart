@@ -5,6 +5,17 @@ class FriendDetailBody extends StatelessWidget {
   FriendDetailBody(this.friend);
   final Friend friend;
 
+  Widget _likingsTile(String text){
+    return new Padding(
+      padding: const EdgeInsets.only(top: 16.0),
+      child: new Text(
+        text,
+        style:
+            TextStyle(color: Colors.white70, fontSize: 16.0 ),
+      ),
+    );
+  }
+
   Widget _buildLocationInfo(TextTheme textTheme) {
     return new Row(
       children: <Widget>[
@@ -24,20 +35,20 @@ class FriendDetailBody extends StatelessWidget {
     );
   }
 
-  Widget _createCircleBadge(IconData iconData, Color color) {
-    return new Padding(
-      padding: const EdgeInsets.only(left: 8.0),
-      child: new CircleAvatar(
-        backgroundColor: color,
-        child: new Icon(
-          iconData,
-          color: Colors.white,
-          size: 16.0,
-        ),
-        radius: 16.0,
-      ),
-    );
-  }
+  // Widget _createCircleBadge(IconData iconData, Color color) {
+  //   return new Padding(
+  //     padding: const EdgeInsets.only(left: 8.0),
+  //     child: new CircleAvatar(
+  //       backgroundColor: color,
+  //       child: new Icon(
+  //         iconData,
+  //         color: Colors.white,
+  //         size: 16.0,
+  //       ),
+  //       radius: 16.0,
+  //     ),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -58,21 +69,27 @@ class FriendDetailBody extends StatelessWidget {
         new Padding(
           padding: const EdgeInsets.only(top: 16.0),
           child: new Text(
-            'Lorem Ipsum is simply dummy text of the printing and typesetting '
-            'industry. Lorem Ipsum has been the industry\'s standard dummy '
-            'text ever since the 1500s.',
+            friend.desc,
             style:
                 textTheme.body1.copyWith(color: Colors.white70, fontSize: 16.0),
           ),
         ),
         new Padding(
-          padding: const EdgeInsets.only(top: 16.0),
-          child: new Row(
-            children: <Widget>[
-              _createCircleBadge(Icons.beach_access, theme.accentColor),
-              _createCircleBadge(Icons.cloud, Colors.white12),
-              _createCircleBadge(Icons.shop, Colors.white12),
-            ],
+          padding: const EdgeInsets.only(top: 32.0),
+          child: new Text(
+            'Likings and Interest:',
+            style:
+                textTheme.body1.copyWith(color: Colors.white, fontSize: 10.0),
+          ),
+        ),
+        Expanded(
+          child: new ListView.builder(
+            itemCount: friend.likings.length,
+            shrinkWrap: true,
+            itemBuilder: (context, index) {
+              return _likingsTile(friend.likings[index]);
+            },
+            
           ),
         ),
       ],

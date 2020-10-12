@@ -4,13 +4,14 @@ import 'package:FriendFinder/Screens/View_Profile/friends/friend.dart';
 import 'package:meta/meta.dart';
 
 class FriendDetailHeader extends StatelessWidget {
-  static const BACKGROUND_IMAGE = 'images/profile_header_background.png';
+  static const BACKGROUND_IMAGE = 'assets/images/login_bottom.png';
 
   FriendDetailHeader(
     this.friend, {
+      this.friendStatus,
     @required this.avatarTag,
   });
-
+  final String friendStatus;
   final Friend friend;
   final Object avatarTag;
 
@@ -59,31 +60,26 @@ class FriendDetailHeader extends StatelessWidget {
     );
   }
 
-  Widget _buildActionButtons(ThemeData theme) {
+  Widget _buildActionButtons(ThemeData theme,) {
     return new Padding(
       padding: const EdgeInsets.only(
         top: 16.0,
         left: 16.0,
         right: 16.0,
       ),
-      child: new Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          _createPillButton(
-            'HIRE ME',
-            backgroundColor: theme.accentColor,
-          ),
-          new DecoratedBox(
-            decoration: new BoxDecoration(
-              border: new Border.all(color: Colors.white30),
-              borderRadius: new BorderRadius.circular(30.0),
-            ),
-            child: _createPillButton(
-              'FOLLOW',
-              textColor: Colors.white70,
-            ),
-          ),
-        ],
+      child: friendStatus == "Add Friend" ? _createPillButton(
+        'Add Friend',
+        backgroundColor: theme.accentColor,
+      )
+      :
+      friendStatus == "Request Sent"?
+      _createPillButton(
+        'Request Sent',
+        backgroundColor: Colors.black,
+      ):
+      _createPillButton(
+        'Message',
+        backgroundColor: theme.accentColor,
       ),
     );
   }
@@ -99,7 +95,23 @@ class FriendDetailHeader extends StatelessWidget {
         minWidth: 140.0,
         color: backgroundColor,
         textColor: textColor,
-        onPressed: () {},
+        onPressed: () {
+          switch (text) {
+            case "Add Friend":
+            //TODO: add friend
+              
+              break;
+            case "Request Sent":
+            //TODO: add friend
+              
+              break;
+            case "Message":
+            //TODO: add friend
+              
+              break;
+            default:
+          }
+        },
         child: new Text(text),
       ),
     );
