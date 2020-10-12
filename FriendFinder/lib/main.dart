@@ -1,8 +1,13 @@
+import 'package:FriendFinder/Screens/ChatScreen/chat_screen.dart';
+import 'package:FriendFinder/Screens/Registration/registration.dart';
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/material.dart';
-// import 'package:FriendFinder/Screens/Welcome/welcome_screen.dart';
+import 'package:FriendFinder/Screens/Welcome/welcome_screen.dart';
 import 'package:FriendFinder/constants.dart';
 import 'package:FriendFinder/Screens/User_Profile/user_profile.dart';
+
+import 'Screens/View_Profile/friend_details_page.dart';
+// import 'package:FriendFinder/Screens/View_Profile/F';
 
 void main() => runApp(MyApp());
 
@@ -21,7 +26,9 @@ class MyApp extends StatelessWidget {
           //   scaffoldBackgroundColor: Colors.white,
           // ),
           theme: ThemeProvider.of(context),
-          home: UserProfile(),
+          home: FriendDetailsPage(
+            'imageHero',
+          ),
         );
       }),
     );
