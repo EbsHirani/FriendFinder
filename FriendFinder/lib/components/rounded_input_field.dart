@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:FriendFinder/components/text_field_container.dart';
-import 'package:FriendFinder/constants.dart';
+import 'package:friendfinder/components/text_field_container.dart';
+import 'package:friendfinder/constants.dart';
 
 class RoundedInputField extends StatelessWidget {
   final String hintText;
@@ -20,12 +20,14 @@ class RoundedInputField extends StatelessWidget {
         style: TextStyle(color: Colors.black),
         onChanged: onChanged,
         cursorColor: kPrimaryColor,
+        
         decoration: InputDecoration(
           icon: Icon(
             icon,
             color: kPrimaryColor,
           ),
           hintText: hintText,
+          hintStyle: TextStyle(fontSize: 20.0, color: Colors.grey),
           border: InputBorder.none,
         ),
       ),

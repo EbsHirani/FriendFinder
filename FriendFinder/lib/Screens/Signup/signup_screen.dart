@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:FriendFinder/Screens/Signup/components/body.dart';
+import 'package:friendfinder/Screens/Signup/components/body.dart';
 
 class SignUpScreen extends StatelessWidget {
   @override

@@ -1,15 +1,23 @@
-import 'package:flutter/material.dart';
-import 'package:FriendFinder/Screens/Login/login_screen.dart';
-import 'package:FriendFinder/Screens/Signup/components/background.dart';
-import 'package:FriendFinder/Screens/Signup/components/or_divider.dart';
-import 'package:FriendFinder/Screens/Signup/components/social_icon.dart';
-import 'package:FriendFinder/components/already_have_an_account_acheck.dart';
-import 'package:FriendFinder/components/rounded_button.dart';
-import 'package:FriendFinder/components/rounded_input_field.dart';
-import 'package:FriendFinder/components/rounded_password_field.dart';
-import 'package:flutter_svg/svg.dart';
+import 'dart:convert';
 
-class Body extends StatelessWidget {
+import 'package:flutter/material.dart';
+import 'package:friendfinder/Screens/Login/login_screen.dart';
+import 'package:friendfinder/Screens/Signup/components/background.dart';
+import 'package:friendfinder/Screens/Signup/components/or_divider.dart';
+import 'package:friendfinder/Screens/Signup/components/social_icon.dart';
+import 'package:friendfinder/components/already_have_an_account_acheck.dart';
+import 'package:friendfinder/components/rounded_button.dart';
+import 'package:friendfinder/components/rounded_input_field.dart';
+import 'package:friendfinder/components/rounded_password_field.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:http/http.dart' as http;
+class Body extends StatefulWidget {
+  @override
+  _BodyState createState() => _BodyState();
+}
+
+class _BodyState extends State<Body> {
+  String email, name, password;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -29,14 +37,36 @@ class Body extends StatelessWidget {
             ),
             RoundedInputField(
               hintText: "Your Email",
-              onChanged: (value) {},
+              onChanged: (value) {
+                email = value;
+              },
+            ),
+            RoundedInputField(
+              hintText: "Your Name",
+              onChanged: (value) {
+                name = value;
+              },
             ),
             RoundedPasswordField(
-              onChanged: (value) {},
+              onChanged: (value) {
+                password = value;
+              },
             ),
             RoundedButton(
               text: "SIGNUP",
-              press: () {},
+              press: () {
+              return http.post(
+                'http://127.0.0.0.1/register',
+                  headers: <String, String>{
+                    'Content-Type': 'application/json; charset=UTF-8',
+                  },
+                  body: jsonEncode(<String, String>{
+                    'email': email,
+                    'password': password,
+                    'name': name,
+                  }),
+                );
+              },
             ),
             SizedBox(height: size.height * 0.03),
             AlreadyHaveAnAccountCheck(

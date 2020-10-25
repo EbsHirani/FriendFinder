@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:FriendFinder/constants.dart';
+import 'package:friendfinder/constants.dart';
 
 class TextFieldContainer extends StatelessWidget {
   final Widget child;

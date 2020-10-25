@@ -1,17 +1,14 @@
-import 'package:friendfinder/Screens/ChatMessage/chat.dart';
-import 'package:friendfinder/Screens/Status/status_screen.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:friendfinder/Screens/User_Profile/user_profile.dart';
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:friendfinder/models/chat_model.dart';
 
-class FriendsListScreen extends StatefulWidget {
+class RequestsPage extends StatefulWidget {
   @override
-  FriendsListScreenState createState() {
-    return new FriendsListScreenState();
-  }
+  _RequestsPageState createState() => _RequestsPageState();
 }
 
-class FriendsListScreenState extends State<FriendsListScreen> {
+class _RequestsPageState extends State<RequestsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,10 +24,10 @@ class FriendsListScreenState extends State<FriendsListScreen> {
               height: 10.0,
             ),
             InkWell(
-              onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => ChatPageView()));
-              },
+              // onTap: () {
+              //   Navigator.push(context,
+              //       MaterialPageRoute(builder: (context) => UserProfile()));
+              // },
               child: new ListTile(
                 leading: new CachedNetworkImage(
                   imageUrl: dummyData[i].avatarUrl,

@@ -1,6 +1,6 @@
 {
-    "name": "FriendFinder",
-    "short_name": "FriendFinder",
+    "name": "friendfinder",
+    "short_name": "friendfinder",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

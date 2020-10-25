@@ -1,8 +1,8 @@
-import 'package:FriendFinder/Screens/ChatMessage/chat.dart';
-import 'package:FriendFinder/Screens/Status/status_screen.dart';
+import 'package:friendfinder/Screens/ChatMessage/chat.dart';
+import 'package:friendfinder/Screens/Status/status_screen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:FriendFinder/models/chat_model.dart';
+import 'package:friendfinder/models/chat_model.dart';
 
 class ChatScreen extends StatefulWidget {
   @override
@@ -27,7 +27,11 @@ class ChatScreenState extends State<ChatScreen> {
                 ),
                 InkWell(
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => ChatPageView()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => ChatPageView(
+                      uid: "NrZIV7Lqo1dLrFvQLZnzrPJhn8N2",
+                      friendId: "bMxLnAalZfgfUyLrIyrzsrH91eD3",
+                      name: "varun"
+                    )));
                   },
                   child: new ListTile(
                     leading: new CachedNetworkImage(

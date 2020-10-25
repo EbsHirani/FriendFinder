@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:FriendFinder/Screens/View_Profile/footer/articles_showcase.dart';
-import 'package:FriendFinder/Screens/View_Profile/friend_detail_body.dart';
-import 'package:FriendFinder/Screens/View_Profile/header/friend_detail_header.dart';
-import 'package:FriendFinder/Screens/View_Profile/friends/friend.dart';
+import 'package:friendfinder/Screens/View_Profile/footer/articles_showcase.dart';
+import 'package:friendfinder/Screens/View_Profile/friend_detail_body.dart';
+import 'package:friendfinder/Screens/View_Profile/header/friend_detail_header.dart';
+import 'package:friendfinder/Screens/View_Profile/friends/friend.dart';
 import 'package:meta/meta.dart';
 
 class FriendDetailsPage extends StatefulWidget {

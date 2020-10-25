@@ -1,6 +1,7 @@
+import 'package:friendfinder/Screens/Report/report.dart';
 import 'package:flutter/material.dart';
-import 'package:FriendFinder/Screens/View_Profile/header/diagonally_cut_colored_image.dart';
-import 'package:FriendFinder/Screens/View_Profile/friends/friend.dart';
+import 'package:friendfinder/Screens/View_Profile/header/diagonally_cut_colored_image.dart';
+import 'package:friendfinder/Screens/View_Profile/friends/friend.dart';
 import 'package:meta/meta.dart';
 
 class FriendDetailHeader extends StatelessWidget {
@@ -14,9 +15,9 @@ class FriendDetailHeader extends StatelessWidget {
   final String friendStatus;
   final Friend friend;
   final Object avatarTag;
+  var screenWidth;
 
   Widget _buildDiagonalImageBackground(BuildContext context) {
-    var screenWidth = MediaQuery.of(context).size.width;
 
     return new DiagonallyCutColoredImage(
       new Image.asset(
@@ -60,39 +61,79 @@ class FriendDetailHeader extends StatelessWidget {
     );
   }
 
-  Widget _buildActionButtons(ThemeData theme,) {
-    return new Padding(
-      padding: const EdgeInsets.only(
-        top: 16.0,
-        left: 16.0,
-        right: 16.0,
-      ),
-      child: friendStatus == "Add Friend" ? _createPillButton(
-        'Add Friend',
-        backgroundColor: theme.accentColor,
-      )
-      :
-      friendStatus == "Request Sent"?
-      _createPillButton(
-        'Request Sent',
-        backgroundColor: Colors.black,
-      ):
-      _createPillButton(
-        'Message',
-        backgroundColor: theme.accentColor,
-      ),
+  Widget _buildActionButtons(ThemeData theme,var context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        friendStatus == "Message"?
+        Row(
+          children: [new Padding(
+              padding: const EdgeInsets.only(
+                top: 16.0,
+                left: 16.0,
+                right: 16.0,
+              ),
+              child: 
+              _createPillButton(
+                context,
+                'UnFriend',
+                backgroundColor: Colors.black,
+              ),
+            ),
+            new Padding(
+              padding: const EdgeInsets.only(
+                top: 16.0,
+                left: 16.0,
+                right: 16.0,
+              ),
+              child: 
+              _createPillButton(
+                context,
+                'Report',
+                backgroundColor: Colors.red
+              ),
+            ),
+          ],
+        ):Container(),
+        new Padding(
+          padding: const EdgeInsets.only(
+            top: 16.0,
+            left: 16.0,
+            right: 16.0,
+          ),
+          child: friendStatus == "Add Friend" ? _createPillButton(
+            context,
+            'Add Friend',
+            backgroundColor: theme.accentColor,
+          )
+          :
+          friendStatus == "Request Sent"?
+          _createPillButton(
+            context,
+            'Request Sent',
+            backgroundColor: Colors.black,
+          ):
+          _createPillButton(
+            context,
+            'Message',
+            backgroundColor: theme.accentColor,
+          ),
+        ),
+      ],
     );
   }
 
   Widget _createPillButton(
+    var context,
     String text, {
     Color backgroundColor = Colors.transparent,
     Color textColor = Colors.white70,
   }) {
+    Function func;
     return new ClipRRect(
       borderRadius: new BorderRadius.circular(30.0),
       child: new MaterialButton(
-        minWidth: 140.0,
+        minWidth: screenWidth * 0.25,
         color: backgroundColor,
         textColor: textColor,
         onPressed: () {
@@ -109,6 +150,10 @@ class FriendDetailHeader extends StatelessWidget {
             //TODO: add friend
               
               break;
+            case "Report":
+            //TODO: add friend
+              Navigator.push(context, MaterialPageRoute(builder: (context) => Report()));
+              break;
             default:
           }
         },
@@ -121,6 +166,8 @@ class FriendDetailHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     var textTheme = theme.textTheme;
+    screenWidth = MediaQuery.of(context).size.width;
+
 
     return new Stack(
       children: <Widget>[
@@ -132,7 +179,7 @@ class FriendDetailHeader extends StatelessWidget {
             children: <Widget>[
               _buildAvatar(),
               _buildFollowerInfo(textTheme),
-              _buildActionButtons(theme),
+              _buildActionButtons(theme, context),
             ],
           ),
         ),

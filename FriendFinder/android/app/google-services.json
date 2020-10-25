@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "612450494062",
+    "firebase_url": "https://friend-finder-69982.firebaseio.com",
+    "project_id": "friend-finder-69982",
+    "storage_bucket": "friend-finder-69982.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:612450494062:android:6e2e332f136840ac21687f",
+        "android_client_info": {
+          "package_name": "com.example.FriendFinder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "612450494062-brdmtd523plfiocrlqtcldgll18is4kr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2pua3Mo7-GdDALGqH0VCz6Py4VipnGiU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "612450494062-brdmtd523plfiocrlqtcldgll18is4kr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:612450494062:android:55446e64f4be15fa21687f",
+        "android_client_info": {
+          "package_name": "com.example.friendfinder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "612450494062-brdmtd523plfiocrlqtcldgll18is4kr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2pua3Mo7-GdDALGqH0VCz6Py4VipnGiU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "612450494062-brdmtd523plfiocrlqtcldgll18is4kr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

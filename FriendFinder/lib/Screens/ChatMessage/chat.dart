@@ -1,15 +1,19 @@
+import 'package:friendfinder/models/message.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 // import 'package:simple_chat_application/Global/Colors.dart' as myColors;
-import 'package:FriendFinder/Screens/ChatMessage/recieved_message.dart';
-import 'package:FriendFinder/Screens/ChatMessage/sent_message.dart';
+import 'package:friendfinder/Screens/ChatMessage/recieved_message.dart';
+import 'package:friendfinder/Screens/ChatMessage/sent_message.dart';
 
 class ChatPageView extends StatefulWidget {
-  final String username;
-
+  // final String username;
+  final String uid, friendId, name;
   const ChatPageView({
-    Key key,
-    this.username,
-  }) : super(key: key);
+    this.uid,
+    this.friendId,
+    this.name,
+  });
 
   @override
   _ChatPageViewState createState() => _ChatPageViewState();
@@ -19,63 +23,83 @@ class _ChatPageViewState extends State<ChatPageView> {
   TextEditingController _text = new TextEditingController();
   ScrollController _scrollController = ScrollController();
   var childList = <Widget>[];
+  // String uid, friendId;
+  var recentJobsRef;
 
   @override
   void initState() {
     super.initState();
-    childList.add(Align(
-        alignment: Alignment(0, 0),
-        child: Container(
-          margin: const EdgeInsets.only(top: 5.0),
-          height: 25,
-          width: 50,
-          decoration: BoxDecoration(
-              color: Colors.black12,
-              borderRadius: BorderRadius.all(
-                Radius.circular(8.0),
-              )),
-          child: Center(
-              child: Text(
-            "Today",
-            style: TextStyle(fontSize: 11),
-          )),
-        )));
-    childList.add(Align(
-      alignment: Alignment(1, 0),
-      child: SendedMessageWidget(
-        content: 'Hello',
-        time: '21:36 PM',
-      ),
-    ));
-    childList.add(Align(
-      alignment: Alignment(1, 0),
-      child: SendedMessageWidget(
-        content: 'How are you? What are you doing?',
-        time: '21:36 PM',
-      ),
-    ));
-    childList.add(Align(
-      alignment: Alignment(-1, 0),
-      child: ReceivedMessageWidget(
-        content: 'Hello, Mohammad.I am fine. How are you?',
-        time: '22:40 PM',
-      ),
-    ));
-    childList.add(Align(
-      alignment: Alignment(1, 0),
-      child: SendedMessageWidget(
-        content:
-            'I am good. Can you do something for me? I need your help my bro.',
-        time: '22:40 PM',
-      ),
-    ));
+    recentJobsRef  = FirebaseFirestore.instance.collection('messages').doc(widget.uid).collection(widget.friendId).orderBy("timestamp", descending: true);
+    
   }
+  sendMsg() async{
+    String msg = _text.text.trim();
 
+    /// Upload images to firebase and returns a URL
+    if (msg.isNotEmpty) {
+      print('thisiscalled $msg');
+      var ref = FirebaseFirestore.instance
+          .collection('messages')
+          .doc(widget.uid)
+          .collection(widget.friendId)
+          .doc(DateTime.now().toString());
+      await ref.set(
+        {
+          "sender": widget.uid,
+          
+          "timestamp": DateTime.now().toString(),
+          'content': msg,
+          "type": 'text',
+        });
+      ref = FirebaseFirestore.instance
+          .collection('messages')
+          .doc(widget.friendId)
+          .collection(widget.uid)
+          .doc(DateTime.now().toString());
+      await ref.set(
+        {
+          "sender": widget.uid,
+          
+          "timestamp": DateTime.now().toString(),
+          'content': msg,
+          "type": 'text',
+        });
+      
+      
+      // FirebaseFirestore.instance.runTransaction((transaction) async {
+      //   await transaction.set(ref, {
+      //     "senderId": uid,
+          
+      //     "timestamp": DateTime.now().millisecondsSinceEpoch.toString(),
+      //     'content': msg,
+      //     "type": 'text',
+      //   });
+      // });
+
+      _scrollController.animateTo(0.0,
+          duration: Duration(milliseconds: 100), curve: Curves.bounceInOut);
+    } else {
+      print('Please enter some text to send');
+    }
+  }
   @override
   void dispose() {
     super.dispose();
   }
-
+  Widget buildItem(Message message){
+    if(message.sender == widget.uid){
+      return SendedMessageWidget(
+        content: message.message,
+        time : message.timeStamp.toString()
+      );
+    }
+    else{
+      return ReceivedMessageWidget(
+        content: message.message,
+        time : message.timeStamp.toString()
+      );
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -110,13 +134,13 @@ class _ChatPageViewState extends State<ChatPageView> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               Text(
-                                widget.username ?? "Jimi Cooke",
+                                widget.name,
                                 style: TextStyle(color: Colors.white, fontSize: 15),
                               ),
-                              Text(
-                                "online",
-                                style: TextStyle(color: Colors.white60, fontSize: 12),
-                              ),
+                              // Text(
+                              //   "online",
+                              //   style: TextStyle(color: Colors.white60, fontSize: 12),
+                              // ),
                             ],
                           ),
                           Spacer(),
@@ -163,28 +187,55 @@ class _ChatPageViewState extends State<ChatPageView> {
                     // height: 500,
                     child: Container(
                       width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: AssetImage(
-                                "assets/images/chat-background-1.jpg"),
-                            fit: BoxFit.cover,
-                            colorFilter: ColorFilter.linearToSrgbGamma()),
+                      // decoration: BoxDecoration(
+                      //   image: DecorationImage(
+                      //       image: AssetImage(
+                      //           "assets/images/chat-background-1.jpg"),
+                      //       fit: BoxFit.cover,
+                      //       colorFilter: ColorFilter.linearToSrgbGamma()),
+                      // ),
+                      child: StreamBuilder(
+                        stream: recentJobsRef.snapshots(),
+                        builder: (context, snapshot) {  
+                          if(snapshot.hasData ){
+                              return ListView.builder(controller: _scrollController,
+                                itemBuilder: (listContext, index){
+                                    var doc = snapshot.data.documents[index];
+                                    print("date");
+                                    print(doc["timestamp"]);
+                                    
+                                    DateTime dateTime = DateTime.parse(doc["timestamp"]);
+                                    return buildItem(Message(
+                                      message : doc["content"],
+                                      sender : doc["sender"],
+                                      timeStamp: dateTime,
+
+                                    ));
+                                },
+                                itemCount: snapshot.data.documents.length,
+                                reverse: true,)
+                                              ;
+                          }
+                          else{
+                              return Center(
+                                child: SizedBox(
+                              height: 36,
+                              width: 36,
+                              child: CircularProgressIndicator(
+                                valueColor: AlwaysStoppedAnimation<Color>(Colors.grey),
+                              ),
+                            ));
+                          }
+                          
+                        }
                       ),
-                      child: SingleChildScrollView(
-                          controller: _scrollController,
-                          // reverse: true,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: childList,
-                          )),
                     ),
                   ),
                   Divider(height: 0, color: Colors.black26),
                   // SizedBox(
                   //   height: 50,
                   Container(
-                    color: Colors.white,
+                    // color: Colors.white,
                     height: 50,
                     child: Padding(
                       padding: const EdgeInsets.only(left: 8.0),
@@ -195,7 +246,9 @@ class _ChatPageViewState extends State<ChatPageView> {
                           // contentPadding: const EdgeInsets.symmetric(horizontal: 5.0),
                           suffixIcon: IconButton(
                             icon: Icon(Icons.send),
-                            onPressed: () {},
+                            onPressed: () {
+                              sendMsg();
+                            },
                           ),
                           border: InputBorder.none,
                           hintText: "enter your message",

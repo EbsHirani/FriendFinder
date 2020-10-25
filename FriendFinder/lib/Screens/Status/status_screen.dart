@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:FriendFinder/Screens/Status/store_page_view.dart';
+import 'package:friendfinder/Screens/Status/store_page_view.dart';
 
 class StatusScreen extends StatelessWidget {
   @override

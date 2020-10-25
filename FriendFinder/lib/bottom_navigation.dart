@@ -1,8 +1,9 @@
 
-import 'package:FriendFinder/Screens/ChatScreen/chat_screen.dart';
-import 'package:FriendFinder/Screens/User_Profile/user_profile.dart';
-import 'package:FriendFinder/Screens/View_Profile/Friend_Page_List.dart';
-import 'package:FriendFinder/Screens/View_Profile/friend_details_page.dart';
+import 'package:friendfinder/Screens/ChatScreen/chat_screen.dart';
+import 'package:friendfinder/Screens/Explore/explore.dart';
+import 'package:friendfinder/Screens/User_Profile/user_profile.dart';
+import 'package:friendfinder/Screens/View_Profile/Friend_Page_List.dart';
+import 'package:friendfinder/Screens/View_Profile/friend_details_page.dart';
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 
@@ -41,10 +42,11 @@ class _BottomNavigationState extends State<BottomNavigation> with SingleTickerPr
     _pageOption =  [
       ChatScreen(),
       FriendsListScreen(),
-      FriendDetailsPage(friend,
-            avatarTag :'imageHero',
-            friendStatus: "Add Friend",
-          ),
+      // FriendDetailsPage(friend,
+      //       avatarTag :'imageHero',
+      //       friendStatus: "Add Friend",
+      //     ),
+      Explore(),
       UserProfile(),
     ];
   }
@@ -58,15 +60,15 @@ class _BottomNavigationState extends State<BottomNavigation> with SingleTickerPr
         index: 0,
         height: 45.0,
         items: <Widget>[
-          Icon(Icons.home, size: 20, color: Colors.white,),
-          Icon(Icons.explore, size: 20, color: Colors.white,),
-          Icon(Icons.edit, size: 20, color: Colors.white,),
-          Icon(Icons.account_circle, size: 20, color: Colors.white,),
+          Icon(Icons.home, size: 20, color: Theme.of(context).primaryColor,),
+          Icon(Icons.explore, size: 20, color: Theme.of(context).primaryColor,),
+          Icon(Icons.edit, size: 20, color: Theme.of(context).primaryColor,),
+          Icon(Icons.account_circle, size: 20, color: Theme.of(context).primaryColor,),
           //Icon(Icons.perm_identity, size: 30),
         ],
-        color: Colors.black87,
-        buttonBackgroundColor: Colors.black87,
-        backgroundColor: Colors.white,
+        color: Theme.of(context).accentColor,
+        buttonBackgroundColor: Theme.of(context).accentColor,
+        backgroundColor: Theme.of(context).primaryColor,
         animationCurve: Curves.easeInOut,
         animationDuration: Duration(milliseconds: 600),
         onTap: (index) {

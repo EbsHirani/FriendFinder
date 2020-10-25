@@ -1,16 +1,28 @@
-import 'package:flutter/material.dart';
-import 'package:FriendFinder/Screens/Login/components/background.dart';
-import 'package:FriendFinder/Screens/Signup/signup_screen.dart';
-import 'package:FriendFinder/components/already_have_an_account_acheck.dart';
-import 'package:FriendFinder/components/rounded_button.dart';
-import 'package:FriendFinder/components/rounded_input_field.dart';
-import 'package:FriendFinder/components/rounded_password_field.dart';
-import 'package:flutter_svg/svg.dart';
+import 'dart:convert';
 
-class Body extends StatelessWidget {
-  const Body({
+import 'package:flutter/material.dart';
+import 'package:friendfinder/Screens/Login/components/background.dart';
+import 'package:friendfinder/Screens/Signup/signup_screen.dart';
+import 'package:friendfinder/components/already_have_an_account_acheck.dart';
+import 'package:friendfinder/components/rounded_button.dart';
+import 'package:friendfinder/components/rounded_input_field.dart';
+import 'package:friendfinder/components/rounded_password_field.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:http/http.dart' as http;
+
+
+class Body extends StatefulWidget {
+
+  Body({
     Key key,
   }) : super(key: key);
+
+  @override
+  _BodyState createState() => _BodyState();
+}
+
+class _BodyState extends State<Body> {
+  String email, pass;
 
   @override
   Widget build(BuildContext context) {
@@ -32,14 +44,31 @@ class Body extends StatelessWidget {
             SizedBox(height: size.height * 0.03),
             RoundedInputField(
               hintText: "Your Email",
-              onChanged: (value) {},
+              onChanged: (value) {
+                email = value;
+              },
             ),
             RoundedPasswordField(
-              onChanged: (value) {},
+              onChanged: (value) {
+                pass = value;
+              },
             ),
             RoundedButton(
               text: "LOGIN",
-              press: () {},
+              press: () async {
+                http.Response response = await  http.post(
+                  'http://127.0.0.0.1/login',
+                  headers: <String, String>{
+                    'Content-Type': 'application/json; charset=UTF-8',
+                  },
+                  body: jsonEncode(<String, String>{
+                    'email': email,
+                    'password': pass,
+                  }),
+                );
+                Map<String, dynamic> map = jsonDecode(response.body);
+                String uid = map["user_id"];
+              },
             ),
             SizedBox(height: size.height * 0.03),
             AlreadyHaveAnAccountCheck(

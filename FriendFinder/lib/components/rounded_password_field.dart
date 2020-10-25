@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:FriendFinder/components/text_field_container.dart';
-import 'package:FriendFinder/constants.dart';
+import 'package:friendfinder/components/text_field_container.dart';
+import 'package:friendfinder/constants.dart';
 
 class RoundedPasswordField extends StatelessWidget {
   final ValueChanged<String> onChanged;

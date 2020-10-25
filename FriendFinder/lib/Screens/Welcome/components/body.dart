@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:FriendFinder/Screens/Login/login_screen.dart';
-import 'package:FriendFinder/Screens/Signup/signup_screen.dart';
-import 'package:FriendFinder/Screens/Welcome/components/background.dart';
-import 'package:FriendFinder/components/rounded_button.dart';
-import 'package:FriendFinder/constants.dart';
+import 'package:friendfinder/Screens/Login/login_screen.dart';
+import 'package:friendfinder/Screens/Signup/signup_screen.dart';
+import 'package:friendfinder/Screens/Welcome/components/background.dart';
+import 'package:friendfinder/components/rounded_button.dart';
+import 'package:friendfinder/constants.dart';
 import 'package:flutter_svg/svg.dart';
 
 class Body extends StatelessWidget {

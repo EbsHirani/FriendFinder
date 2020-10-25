@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:FriendFinder/Screens/View_Profile/friends/friend.dart';
+import 'package:friendfinder/Screens/View_Profile/friends/friend.dart';
 
 class FriendDetailBody extends StatelessWidget {
   FriendDetailBody(this.friend);

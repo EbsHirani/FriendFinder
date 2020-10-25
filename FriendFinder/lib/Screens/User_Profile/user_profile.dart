@@ -1,9 +1,10 @@
+import 'package:friendfinder/Screens/Registration/registration.dart';
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
-import 'package:FriendFinder/constants.dart';
-import 'package:FriendFinder/widgets/profile_list_item.dart';
+import 'package:friendfinder/constants.dart';
+import 'package:friendfinder/widgets/profile_list_item.dart';
 
 class UserProfile extends StatelessWidget {
   @override
@@ -97,9 +98,8 @@ class UserProfile extends StatelessWidget {
     var header = Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        SizedBox(width: kSpacingUnit.w * 3),
-        Icon(LineAwesomeIcons.arrow_left,
-            size: ScreenUtil().setSp(kSpacingUnit.w * 3)),
+        SizedBox(width: kSpacingUnit.w * 6),
+        
         profileinfo,
         themeSwitcher,
         SizedBox(width: kSpacingUnit.w * 3),
@@ -116,30 +116,20 @@ class UserProfile extends StatelessWidget {
               Expanded(
                 child: ListView(
                   children: <Widget>[
-                    ProfileListItem(
-                      icon: LineAwesomeIcons.history,
-                      text: 'Name',
+                    
+                    InkWell(
+                      onTap:(){
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Registration()));
+                      },
+                      child: ProfileListItem(
+                        icon: LineAwesomeIcons.question_circle,
+                        text: 'Description/Interests',
+                      ),
                     ),
-                    ProfileListItem(
-                      icon: LineAwesomeIcons.question_circle,
-                      text: 'Update Description',
-                    ),
-                    ProfileListItem(
-                      icon: LineAwesomeIcons.user_plus,
-                      text: 'Invite a Friend',
-                    ),
-                    ProfileListItem(
-                      icon: LineAwesomeIcons.cog,
-                      text: 'Settings',
-                    ),
-                    ProfileListItem(
-                      icon: LineAwesomeIcons.user_shield,
-                      text: "Privacy",
-                    ),
-                    ProfileListItem(
-                      icon: LineAwesomeIcons.question_circle,
-                      text: 'Help & Support',
-                    ),
+                    
                     ProfileListItem(
                       icon: LineAwesomeIcons.alternate_sign_out,
                       text: 'Logout',

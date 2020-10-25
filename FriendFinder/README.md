@@ -1,4 +1,4 @@
-# FriendFinder
+# friendfinder
 
 A new Flutter project.
 
