@@ -10,6 +10,7 @@ import 'package:friendfinder/constants.dart';
 import 'package:friendfinder/Screens/User_Profile/user_profile.dart';
 
 import 'Screens/Login/login_screen.dart';
+import 'Screens/Login/login_screen.dart';
 import 'Screens/Registration/registration.dart';
 import 'Screens/View_Profile/friend_details_page.dart';
 import 'bottom_navigation.dart';
@@ -46,6 +47,7 @@ class MyApp extends StatelessWidget {
                   // ),
                   theme: ThemeProvider.of(context),
                   home: Registration(uid: "bMxLnAalZfgfUyLrIyrzsrH91eD3"),
+                  // home: LoginScreen(),
                   // FriendDetailsPage(friend,
                   //   avatarTag :'imageHero',
                   //   friendStatus: "Message",
