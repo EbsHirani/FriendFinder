@@ -83,7 +83,8 @@ class _RegistrationState extends State<Registration> {
   //                   file: selected
   //                 )));
   // }
-  Future<bool> getUser(String uid) async{
+  Future<bool> getUser() async{
+    print("in");
     http.Response res = await http.post(
                   'http://10.0.2.2:5000/get_user_profile',
                   headers: <String, String>{
@@ -95,6 +96,7 @@ class _RegistrationState extends State<Registration> {
                 );
     Map map = jsonDecode(res.body);
     name = map["name"];
+    print("out");
     try{
     url = map["profile_picture"];
     bio = map["bio"];
@@ -106,6 +108,7 @@ class _RegistrationState extends State<Registration> {
     catch (e){
       print(e);
     }
+    print("done");
     return true;
 
   }
@@ -148,7 +151,7 @@ class _RegistrationState extends State<Registration> {
 
     return Scaffold(
       body: FutureBuilder(
-        future: getUser(uid),
+        future: getUser(),
         builder: (context, snapshot) {
           if(snapshot.hasData){
 
