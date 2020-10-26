@@ -12,6 +12,7 @@ import 'package:friendfinder/components/rounded_input_field.dart';
 import 'package:friendfinder/components/rounded_password_field.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:http/http.dart' as http;
+
 class Body extends StatefulWidget {
   @override
   _BodyState createState() => _BodyState();
@@ -55,9 +56,9 @@ class _BodyState extends State<Body> {
             ),
             RoundedButton(
               text: "SIGNUP",
-              press: () async{
-               http.Response res = await http.post(
-                'http://127.0.0.0.1/register',
+              press: () async {
+                http.Response res = await http.post(
+                  'http://10.0.2.2:5000/register',
                   headers: <String, String>{
                     'Content-Type': 'application/json; charset=UTF-8',
                   },
@@ -68,11 +69,10 @@ class _BodyState extends State<Body> {
                   }),
                 );
 
-                Map map =  jsonDecode(res.body);
+                Map map = jsonDecode(res.body);
                 String uid = map["user_id"];
-                Navigator.pushReplacement(context, MaterialPageRoute(
-                    builder: (context) => Registration()));
-
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => Registration()));
               },
             ),
             SizedBox(height: size.height * 0.03),
