@@ -72,8 +72,10 @@ class _BodyState extends State<Body> {
 
                 Map map = jsonDecode(res.body);
                 String uid = map["user_id"];
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => Registration()));
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Registration(uid: uid)));
               },
             ),
             SizedBox(height: size.height * 0.03),
