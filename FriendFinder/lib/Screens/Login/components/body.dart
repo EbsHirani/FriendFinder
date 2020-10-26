@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:friendfinder/Screens/Login/components/background.dart';
 import 'package:friendfinder/Screens/Signup/signup_screen.dart';
+import 'package:friendfinder/bottom_navigation.dart';
 import 'package:friendfinder/components/already_have_an_account_acheck.dart';
 import 'package:friendfinder/components/rounded_button.dart';
 import 'package:friendfinder/components/rounded_input_field.dart';
@@ -57,7 +58,7 @@ class _BodyState extends State<Body> {
               text: "LOGIN",
               press: () async {
                 http.Response response = await  http.post(
-                  'http://127.0.0.0.1/login',
+                  'http://10.0.2.2:5000/login',
                   headers: <String, String>{
                     'Content-Type': 'application/json; charset=UTF-8',
                   },
@@ -68,6 +69,11 @@ class _BodyState extends State<Body> {
                 );
                 Map<String, dynamic> map = jsonDecode(response.body);
                 String uid = map["user_id"];
+                Navigator.pushAndRemoveUntil(context,  MaterialPageRoute(
+                    builder: (context) {
+                      return BottomNavigation(uid:uid);
+                    },
+                  ), (route) => false);
               },
             ),
             SizedBox(height: size.height * 0.03),

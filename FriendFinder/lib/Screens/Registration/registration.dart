@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
@@ -8,10 +9,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import 'package:http/http.dart' as http;
 
 import 'imageUploader.dart';
 
 class Registration extends StatefulWidget {
+  String uid;
+  Registration({
+    this.uid
+  });
   @override
   _RegistrationState createState() => _RegistrationState();
 }
@@ -19,7 +25,7 @@ class Registration extends StatefulWidget {
 class _RegistrationState extends State<Registration> {
   String bio;
   File file;
-  String uid, url;
+  String uid, url, name, email;
   StorageReference ref;
   // File img;
   File _image;
@@ -63,6 +69,30 @@ class _RegistrationState extends State<Registration> {
   //                   file: selected
   //                 )));
   // }
+  Future<bool> getUser(String uid) async{
+    http.Response res = await http.post(
+                  'http://10.0.2.2:5000/register',
+                  headers: <String, String>{
+                    'Content-Type': 'application/json; charset=UTF-8',
+                  },
+                  body: jsonEncode(<String, String>{
+                    'uid' : uid
+                  }),
+                );
+    Map map = jsonDecode(res.body);
+    name = map["name"];
+    try{
+
+    bio = map["bio"];
+    email = map["email"];
+    selected = map["interest"];
+    }
+    catch (e){
+      print(e);
+    }
+
+
+  }
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context, height: 896, width: 414, allowFontScaling: true);
