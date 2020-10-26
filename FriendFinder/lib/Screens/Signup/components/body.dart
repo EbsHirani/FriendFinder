@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:friendfinder/Screens/Login/login_screen.dart';
+import 'package:friendfinder/Screens/Registration/registration.dart';
 import 'package:friendfinder/Screens/Signup/components/background.dart';
 import 'package:friendfinder/Screens/Signup/components/or_divider.dart';
 import 'package:friendfinder/Screens/Signup/components/social_icon.dart';
@@ -54,8 +55,8 @@ class _BodyState extends State<Body> {
             ),
             RoundedButton(
               text: "SIGNUP",
-              press: () {
-              return http.post(
+              press: () async{
+               http.Response res = await http.post(
                 'http://127.0.0.0.1/register',
                   headers: <String, String>{
                     'Content-Type': 'application/json; charset=UTF-8',
@@ -66,6 +67,12 @@ class _BodyState extends State<Body> {
                     'name': name,
                   }),
                 );
+
+                Map map =  jsonDecode(res.body);
+                String uid = map["user_id"];
+                Navigator.pushReplacement(context, MaterialPageRoute(
+                    builder: (context) => Registration()));
+
               },
             ),
             SizedBox(height: size.height * 0.03),

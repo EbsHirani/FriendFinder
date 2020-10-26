@@ -1,5 +1,6 @@
 import 'package:friendfinder/Screens/ChatScreen/chat_screen.dart';
 import 'package:friendfinder/Screens/Registration/registration.dart';
+import 'package:friendfinder/Screens/Signup/signup_screen.dart';
 import 'package:friendfinder/Screens/View_Profile/friends/friend.dart';
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -43,7 +44,7 @@ class MyApp extends StatelessWidget {
                 //   scaffoldBackgroundColor: Colors.white,
                 // ),
                 theme: ThemeProvider.of(context),
-                home: Registration(),
+                home: SignUpScreen(),
                 // FriendDetailsPage(friend,
                 //   avatarTag :'imageHero',
                 //   friendStatus: "Message",
