@@ -25,7 +25,7 @@ class Registration extends StatefulWidget {
 class _RegistrationState extends State<Registration> {
   String bio, lang;
   File file;
-  String uid, url, name, email;
+  String uid, url, name = "ebsjla", email = "adhjkda";
   StorageReference ref;
   DateTime selectedDate;
   // File img;
@@ -37,7 +37,7 @@ class _RegistrationState extends State<Registration> {
 
   // StorageUploadTask _uploadTask;
 
-  List all = ["Music", "Dance", "Act", "Hi"];
+  List all = ["Music", "Dance", "Act", "Hi", "jajl", "adfajk", "ajhkdj"];
   List<String> languages = [
     "English",
     "Hindi",
@@ -81,6 +81,8 @@ class _RegistrationState extends State<Registration> {
   //                 )));
   // }
   Future<bool> getUser() async {
+    if(load){
+    load = false;
     print("in");
     http.Response res = await http.post(
       'http://10.0.2.2:5000/get_user_profile',
@@ -108,6 +110,7 @@ class _RegistrationState extends State<Registration> {
       selected = [];
     }
     print("done");
+    }
     return true;
   }
 
@@ -145,19 +148,20 @@ class _RegistrationState extends State<Registration> {
         _image = image;
         print('Image Path $_image');
       });
-      uploadPic(context);
+      uploadPic(context);   
     }
 
     return Scaffold(
+      
       body: FutureBuilder(
           future: getUser(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return Container(
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      Container(
+                child: ListView(
+                  children: [
+                    Center(
+                      child: Container(
                         height: kSpacingUnit.w * 10,
                         width: kSpacingUnit.w * 10,
                         margin: EdgeInsets.only(top: kSpacingUnit.w * 3),
@@ -205,70 +209,71 @@ class _RegistrationState extends State<Registration> {
                           ),
                         ),
                       ),
-                      SizedBox(height: kSpacingUnit.w * 2),
-                      Text(name, style: kTitleTextStyle),
-                      SizedBox(height: kSpacingUnit.w * 0.5),
-                      Text(email, style: kCaptionTextStyle),
-                      SizedBox(height: kSpacingUnit.w * 2),
-                      Column(children: [
-                        Container(
-                          padding: EdgeInsets.all(10),
-                          child: RoundedInputField(
-                            hintText: "Your Bio",
-                            onChanged: (value) {
-                              bio = value;
+                    ),
+                    SizedBox(height: kSpacingUnit.w * 2),
+                    Center(child: Text(name, style: kTitleTextStyle)),
+                    SizedBox(height: kSpacingUnit.w * 0.5),
+                    Center(child: Text(email, style: kCaptionTextStyle)),
+                    SizedBox(height: kSpacingUnit.w * 2),
+                    Column(children: [
+                      Container(
+                        padding: EdgeInsets.all(10),
+                        child: RoundedInputField(
+                          hintText: "Your Bio",
+                          onChanged: (value) {
+                            bio = value;
+                          },
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.all(20),
+                        child: DateTimeField(
+                          selectedDate: selectedDate,
+                          onDateSelected: (DateTime date) {
+                            setState(() {
+                              selectedDate = date;
+                            });
+                          },
+                          lastDate: DateTime(2020),
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.all(20),
+                        child: DropdownButtonFormField(
+                            isExpanded: true,
+                            items: languages.map((String category) {
+                              return new DropdownMenuItem(
+                                  value: category,
+                                  child: Row(
+                                    children: <Widget>[
+                                      Icon(Icons.arrow_right),
+                                      Flexible(
+                                        child: Text(category),
+                                      ),
+                                    ],
+                                  ));
+                            }).toList(),
+                            onChanged: (newValue) async {
+                              // do other stuff with _category
+                              setState(() => lang = newValue);
+                              // await db.setCurrentstream(newValue);
                             },
-                          ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.all(20),
-                          child: DateTimeField(
-                            selectedDate: selectedDate,
-                            onDateSelected: (DateTime date) {
-                              setState(() {
-                                selectedDate = date;
-                              });
-                            },
-                            lastDate: DateTime(2020),
-                          ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.all(20),
-                          child: DropdownButtonFormField(
-                              isExpanded: true,
-                              items: languages.map((String category) {
-                                return new DropdownMenuItem(
-                                    value: category,
-                                    child: Row(
-                                      children: <Widget>[
-                                        Icon(Icons.arrow_right),
-                                        Flexible(
-                                          child: Text(category),
-                                        ),
-                                      ],
-                                    ));
-                              }).toList(),
-                              onChanged: (newValue) async {
-                                // do other stuff with _category
-                                setState(() => lang = newValue);
-                                // await db.setCurrentstream(newValue);
-                              },
-                              value: lang,
-                              decoration: InputDecoration(
-                                enabledBorder: UnderlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: Colors.black)),
-                                contentPadding:
-                                    EdgeInsets.fromLTRB(10, 10, 10, 10),
-                                filled: true,
-                                // fillColor: Theme.of(context).primaryColor,
-                                errorStyle: TextStyle(
-                                    color: Colors.redAccent, fontSize: 16.0),
-                                hintText: 'Choose Prefered Language',
-                              )),
-                        ),
-                        SingleChildScrollView(
-                          child: GridView.builder(
+                            value: lang,
+                            decoration: InputDecoration(
+                              enabledBorder: UnderlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Colors.black)),
+                              contentPadding:
+                                  EdgeInsets.fromLTRB(10, 10, 10, 10),
+                              filled: true,
+                              // fillColor: Theme.of(context).primaryColor,
+                              errorStyle: TextStyle(
+                                  color: Colors.redAccent, fontSize: 16.0),
+                              hintText: 'Choose Prefered Language',
+                            )),
+                      ),
+                      SingleChildScrollView(
+                        child: GridView.builder(
                             shrinkWrap: true,
                             physics: NeverScrollableScrollPhysics(),
                             gridDelegate:
@@ -297,8 +302,8 @@ class _RegistrationState extends State<Registration> {
                                           style: TextStyle(
                                               color:
                                                   selected.contains(all[index])
-                                                      ? Colors.yellow
-                                                      : Colors.white),
+                          ? Colors.yellow
+                          : Colors.white),
                                         ),
                                         value: selected.contains(all[index]),
                                         onChanged: (val) {
@@ -336,48 +341,47 @@ class _RegistrationState extends State<Registration> {
                                   ));
                             },
                           ),
-                        ),
-                      ]),
-                      // Spacer(),
-                      RoundedButton(
-                        text: "Confirm",
-                        press: () async {
-                          if (name == null ||
-                              lang == null ||
-                              bio == null ||
-                              selectedDate == null ||
-                              selected.length == 0) {
-                            Fluttertoast.showToast(
-                                msg: "Enter all the fields",
-                                toastLength: Toast.LENGTH_SHORT,
-                                gravity: ToastGravity.CENTER,
-                                timeInSecForIosWeb: 1,
-                                backgroundColor: Colors.red,
-                                textColor: Colors.white,
-                                fontSize: 16.0);
-                          } else {
-                            http.Response res = await http.post(
-                              'http://10.0.2.2:5000/set_user_profile',
-                              headers: <String, String>{
-                                'Content-Type':
-                                    'application/json; charset=UTF-8',
-                              },
-                              body: jsonEncode(<String, dynamic>{
-                                "name": name,
-                                "bio": bio,
-                                "dob": selectedDate,
-                                "interest": selected,
-                                "user_id": uid,
-                                "profile_picture": url,
-                                "languages": lang,
-                              }),
-                            );
-                            Map map = jsonDecode(res.body);
-                          }
-                        },
-                      )
-                    ],
-                  ),
+                      ),
+                    ]),
+                    // Spacer(),
+                    RoundedButton(
+                      text: "Confirm",
+                      press: () async {
+                        if (name == null ||
+                            lang == null ||
+                            bio == null ||
+                            selectedDate == null ||
+                            selected.length == 0) {
+                          Fluttertoast.showToast(
+                              msg: "Enter all the fields",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.CENTER,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.red,
+                              textColor: Colors.white,
+                              fontSize: 16.0);
+                        } else {
+                          http.Response res = await http.post(
+                            'http://10.0.2.2:5000/set_user_profile',
+                            headers: <String, String>{
+                              'Content-Type':
+                                  'application/json; charset=UTF-8',
+                            },
+                            body: jsonEncode(<String, dynamic>{
+                              "name": name,
+                              "bio": bio,
+                              "dob": selectedDate,
+                              "interest": selected,
+                              "user_id": uid,
+                              "profile_picture": url,
+                              "languages": lang,
+                            }),
+                          );
+                          Map map = jsonDecode(res.body);
+                        }
+                      },
+                    )
+                  ],
                 ),
               );
             } else {
