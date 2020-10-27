@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:friendfinder/Screens/Registration/registration.dart';
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/material.dart';
@@ -5,66 +7,48 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:friendfinder/constants.dart';
 import 'package:friendfinder/widgets/profile_list_item.dart';
+import 'package:http/http.dart' as http;
 
-class UserProfile extends StatelessWidget {
+class UserProfile extends StatefulWidget {
+  UserProfile({
+    this.uid
+  });
+  String uid;
+  @override
+  _UserProfileState createState() => _UserProfileState();
+}
+
+class _UserProfileState extends State<UserProfile> {
+  bool load = true;
+
+  String name, email;
+
+  Future<bool> getUser() async {
+    if(load){
+    load = false;
+    print("in");
+    http.Response res = await http.post(
+      'http://192.168.0.110:5000/get_user_profile',
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{'user_id': widget.uid}),
+    );
+    Map map = jsonDecode(res.body);
+    name = map["name"];
+    email = map["email_id"];
+
+    print("out");
+    
+    }
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context, height: 896, width: 414, allowFontScaling: true);
 
-    var profileinfo = Expanded(
-      child: Column(
-        children: [
-          Container(
-            height: kSpacingUnit.w * 10,
-            width: kSpacingUnit.w * 10,
-            margin: EdgeInsets.only(top: kSpacingUnit.w * 3),
-            child: Stack(
-              children: [
-                CircleAvatar(
-                  radius: kSpacingUnit.w * 5,
-                  backgroundImage: AssetImage('assets/images/avatar.png'),
-                ),
-                Align(
-                  alignment: Alignment.bottomRight,
-                  child: Container(
-                    height: kSpacingUnit.w * 2.5,
-                    width: kSpacingUnit.w * 2.5,
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).accentColor,
-                      shape: BoxShape.circle,
-                    ),
-                    child: Icon(
-                      LineAwesomeIcons.pen,
-                      color: kDarkPrimaryColor,
-                      size: ScreenUtil().setSp(kSpacingUnit.w * 1.5),
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
-          SizedBox(height: kSpacingUnit.w * 2),
-          Text('Adam', style: kTitleTextStyle),
-          SizedBox(height: kSpacingUnit.w * 0.5),
-          Text('Adam@gmail.com', style: kCaptionTextStyle),
-          SizedBox(height: kSpacingUnit.w * 2),
-          Container(
-            height: kSpacingUnit.w * 3,
-            width: kSpacingUnit.w * 20,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(kSpacingUnit.w * 3),
-              color: Theme.of(context).accentColor,
-            ),
-            child: Center(
-              child: Text(
-                "Change Password",
-                style: kButtonTextStyle,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
+    
     // ignore: non_constant_identifier_names
 
     var themeSwitcher = ThemeSwitcher(
@@ -95,50 +79,116 @@ class UserProfile extends StatelessWidget {
       },
     );
 
-    var header = Row(
+    
+    return ThemeSwitchingArea(
+        child: (Builder(
+      builder: (context) {
+        return Scaffold(
+          body: FutureBuilder(
+            future: getUser(),
+            builder: (context, snapshot) {
+              if(snapshot.hasData){
+              var profileinfo = Expanded(
+      child: Column(
+        children: [
+          Container(
+            height: kSpacingUnit.w * 10,
+            width: kSpacingUnit.w * 10,
+            margin: EdgeInsets.only(top: kSpacingUnit.w * 3),
+            child: Stack(
+              children: [
+                CircleAvatar(
+                  radius: kSpacingUnit.w * 5,
+                  backgroundImage: AssetImage('assets/images/avatar.png'),
+                ),
+                // Align(
+                //   alignment: Alignment.bottomRight,
+                //   child: Container(
+                //     height: kSpacingUnit.w * 2.5,
+                //     width: kSpacingUnit.w * 2.5,
+                //     decoration: BoxDecoration(
+                //       color: Theme.of(context).accentColor,
+                //       shape: BoxShape.circle,
+                //     ),
+                //     child: Icon(
+                //       LineAwesomeIcons.pen,
+                //       color: kDarkPrimaryColor,
+                //       size: ScreenUtil().setSp(kSpacingUnit.w * 1.5),
+                //     ),
+                //   ),
+                // )
+              ],
+            ),
+          ),
+          SizedBox(height: kSpacingUnit.w * 2),
+          Text(name, style: kTitleTextStyle),
+          SizedBox(height: kSpacingUnit.w * 0.5),
+          Text(email, style: kCaptionTextStyle),
+          SizedBox(height: kSpacingUnit.w * 2),
+          // Container(
+          //   height: kSpacingUnit.w * 3,
+          //   width: kSpacingUnit.w * 20,
+          //   decoration: BoxDecoration(
+          //     borderRadius: BorderRadius.circular(kSpacingUnit.w * 3),
+          //     color: Theme.of(context).accentColor,
+          //   ),
+          //   child: Center(
+          //     child: Text(
+          //       "Change Password",
+          //       style: kButtonTextStyle,
+          //     ),
+          //   ),
+          // ),
+        ],
+      ),
+    );
+              
+                var header = Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
         SizedBox(width: kSpacingUnit.w * 6),
         
         profileinfo,
-        themeSwitcher,
+        // themeSwitcher,
         SizedBox(width: kSpacingUnit.w * 3),
       ],
     );
-    return ThemeSwitchingArea(
-        child: (Builder(
-      builder: (context) {
-        return Scaffold(
-          body: Column(
-            children: <Widget>[
-              SizedBox(height: kSpacingUnit.w * 5),
-              header,
-              Expanded(
-                child: ListView(
+                return Column(
                   children: <Widget>[
-                    
-                    InkWell(
-                      onTap:(){
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => Registration()));
-                      },
-                      child: ProfileListItem(
-                        icon: LineAwesomeIcons.question_circle,
-                        text: 'Description/Interests',
+                    SizedBox(height: kSpacingUnit.w * 5),
+                    header,
+                    Expanded(
+                      child: ListView(
+                        children: <Widget>[
+                          
+                          InkWell(
+                            onTap:(){
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Registration()));
+                            },
+                            child: ProfileListItem(
+                              icon: LineAwesomeIcons.question_circle,
+                              text: 'Description/Interests',
+                            ),
+                          ),
+                          
+                          ProfileListItem(
+                            icon: LineAwesomeIcons.alternate_sign_out,
+                            text: 'Logout',
+                            hasNavigation: false,
+                          ),
+                        ],
                       ),
-                    ),
-                    
-                    ProfileListItem(
-                      icon: LineAwesomeIcons.alternate_sign_out,
-                      text: 'Logout',
-                      hasNavigation: false,
-                    ),
+                    )
                   ],
-                ),
-              )
-            ],
+                );
+              }
+            else{
+              return Center(child: CircularProgressIndicator(),);
+            }
+            }
           ),
         );
       },

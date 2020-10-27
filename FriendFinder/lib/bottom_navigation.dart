@@ -47,7 +47,7 @@ class _BottomNavigationState extends State<BottomNavigation> with SingleTickerPr
       //       friendStatus: "Add Friend",
       //     ),
       Explore(uid:uid),
-      UserProfile(),
+      UserProfile(uid : uid),
     ];
   }
 
