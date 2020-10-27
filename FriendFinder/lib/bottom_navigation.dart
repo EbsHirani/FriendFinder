@@ -46,7 +46,7 @@ class _BottomNavigationState extends State<BottomNavigation> with SingleTickerPr
       //       avatarTag :'imageHero',
       //       friendStatus: "Add Friend",
       //     ),
-      Explore(),
+      Explore(uid:uid),
       UserProfile(),
     ];
   }

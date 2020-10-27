@@ -4,6 +4,7 @@ import 'package:friendfinder/Screens/View_Profile/friends/friend.dart';
 class FriendDetailBody extends StatelessWidget {
   FriendDetailBody(this.friend);
   final Friend friend;
+  
 
   Widget _likingsTile(String text){
     return new Padding(

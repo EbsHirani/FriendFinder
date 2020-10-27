@@ -1,3 +1,4 @@
+import 'package:friendfinder/Screens/View_Profile/friends/friend.dart';
 import 'package:friendfinder/models/message.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -8,8 +9,12 @@ import 'package:friendfinder/Screens/ChatMessage/sent_message.dart';
 
 class ChatPageView extends StatefulWidget {
   // final String username;
-  final String uid, friendId, name;
+  final String uid, friendId, name, friendStatus, avatarTag;
+  final Friend friend;
   const ChatPageView({
+    this.avatarTag,
+    this.friendStatus,
+    this.friend,
     this.uid,
     this.friendId,
     this.name,

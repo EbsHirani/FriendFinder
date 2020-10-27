@@ -4,8 +4,11 @@ import 'package:friendfinder/Screens/ChatMessage/chat.dart';
 import 'package:friendfinder/Screens/Status/status_screen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:friendfinder/Screens/View_Profile/friend_details_page.dart';
 import 'package:friendfinder/models/chat_model.dart';
 import 'package:http/http.dart' as http;
+
+import 'friends/friend.dart';
 
 class FriendsListScreen extends StatefulWidget {
   String uid;
@@ -42,14 +45,12 @@ class FriendsListScreenState extends State<FriendsListScreen> {
         })
       
     );
-    try{
+    
 
-      var x = jsonDecode(res.body);
-      print(x);
-    }
-    catch(e){
-      print(e);
-    }
+    li = jsonDecode(res.body);
+    print(li);
+    
+    
     
     // li = map.keys.toList();
     // print(li.keys);
@@ -66,9 +67,12 @@ class FriendsListScreenState extends State<FriendsListScreen> {
       body: FutureBuilder(
         future: getUsers(),
         builder: (context, snapshot) {
+          if(snapshot.hasData){
+
           return new ListView.builder(
-            itemCount: dummyData.length,
-            itemBuilder: (context, i) => new Column(
+            itemCount: li.length,
+            itemBuilder: (context, i) =>
+             new Column(
               children: <Widget>[
                 new Divider(
                   height: 10.0,
@@ -76,7 +80,18 @@ class FriendsListScreenState extends State<FriendsListScreen> {
                 InkWell(
                   onTap: () {
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => ChatPageView()));
+                        MaterialPageRoute(builder: (context) => FriendDetailsPage(
+                          Friend(avatar: li[i]["user_profile"]["profile_picture"] == null? 
+                          "https://miro.medium.com/max/945/1*ilC2Aqp5sZd1wi0CopD1Hw.png":
+                          li[i]["user_profile"]["profile_picture"],
+                           name: li[i]["user_profile"]["name"],
+                            email: li[i]["user_profile"]["email"],
+                             location: "Mumbai",
+                              friendsCount: 10,
+                               desc: li[i]["user_profile"]["bio"]),
+                          avatarTag: 'imageHero',
+                          friendStatus: "Message",
+                        )));
                   },
                   child: new ListTile(
                     leading: new CachedNetworkImage(
@@ -90,20 +105,20 @@ class FriendsListScreenState extends State<FriendsListScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         new Text(
-                          dummyData[i].name,
+                          li[i]["user_profile"]["name"],
                           style: new TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        new Text(
-                          dummyData[i].time,
-                          style: new TextStyle(color: Colors.grey, fontSize: 14.0),
-                        ),
+                        // new Text(
+                        //   dummyData[i].time,
+                        //   style: new TextStyle(color: Colors.grey, fontSize: 14.0),
+                        // ),
                       ],
                     ),
                     subtitle: new Container(
                       padding: const EdgeInsets.only(top: 5.0),
                       child: new Text(
                         // ignore: todo
-                        dummyData[i].message, //TODO : Status here
+                        li[i]["user_profile"]["bio"], //TODO : Status here
                         style: new TextStyle(color: Colors.grey, fontSize: 15.0),
                       ),
                     ),
@@ -112,6 +127,12 @@ class FriendsListScreenState extends State<FriendsListScreen> {
               ],
             ),
           );
+          }
+        else{
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
         }
       ),
     );

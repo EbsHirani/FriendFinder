@@ -20,7 +20,6 @@ class _FindNewUsersState extends State<FindNewUsers> {
   _FindNewUsersState({this.uid});
   String genre, stream;
   List li;
-  Map map;
   bool load = true;
   Icon filterIcon = new Icon(
     Icons.filter_list,
@@ -37,15 +36,21 @@ class _FindNewUsersState extends State<FindNewUsers> {
   Future<bool> getUsers() async {
     if(load){
     load = false;
-    print("in");
-    http.Response res = await http.get(
-      'http://192.168.0.110:5000/get_all_users',
+    print("in find users");
+    print(uid);
+    http.Response res = await http.post(
+      'http://192.168.0.110:5000/get_match_users',
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
+      body:jsonEncode(<String,String>{
+        "user_id":uid
+      })
     );
-    map = jsonDecode(res.body);
-    li = map.keys.toList();
+    // print(jsonDecode(res.body));
+    li = jsonDecode(res.body);
+    print(li);
+    // li = map.keys.toList();
     // print(li.keys);
     }
     return true;
@@ -222,16 +227,25 @@ class _FindNewUsersState extends State<FindNewUsers> {
                     onTap: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) => FriendDetailsPage(
-                            friend,
+                            Friend(
+                              avatar: li[i]["user_profile"]["profile_picture"] == null? 
+                          "https://miro.medium.com/max/945/1*ilC2Aqp5sZd1wi0CopD1Hw.png":
+                          li[i]["user_profile"]["profile_picture"],
+                           name: li[i]["user_profile"]["name"],
+                            email: li[i]["user_profile"]["email"],
+                             location: "Mumbai",
+                              friendsCount: 10,
+                               desc: li[i]["user_profile"]["bio"]
+                            ),
                             avatarTag :'imageHero',
                             friendStatus: "Add Friend",
                           )));
                     },
                     child: new ListTile(
                       leading: new CachedNetworkImage(
-                        imageUrl: map[li[i]]["profile_picture"] == null ?
+                        imageUrl: li[i]["profile_picture"] == null ?
                         "https://miro.medium.com/max/945/1*ilC2Aqp5sZd1wi0CopD1Hw.png"
-                         :map[li[i]]["profile_picture"],
+                         :li[i]["profile_picture"],
                         progressIndicatorBuilder: (context, url, downloadProgress) =>
                             CircularProgressIndicator(
                                 value: downloadProgress.progress),
@@ -241,7 +255,7 @@ class _FindNewUsersState extends State<FindNewUsers> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           new Text(
-                            map[li[i]]["name"],
+                            li[i]["name"],
                             style: new TextStyle(fontWeight: FontWeight.bold),
                           ),
                           // new Text(
@@ -254,7 +268,7 @@ class _FindNewUsersState extends State<FindNewUsers> {
                         padding: const EdgeInsets.only(top: 5.0),
                         child: new Text(
                           // ignore: todo
-                          map[li[i]]["name"], //TODO : Status here
+                          li[i]["name"], //TODO : Status here
                           style: new TextStyle(color: Colors.grey, fontSize: 15.0),
                         ),
                       ),
