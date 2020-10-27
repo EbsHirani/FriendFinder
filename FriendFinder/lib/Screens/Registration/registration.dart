@@ -32,10 +32,6 @@ class _RegistrationState extends State<Registration> {
   File _image;
   List<bool> bools = [];
 
-  // final FirebaseStorage _storage =
-  //     FirebaseStorage(storageBucket: 'gs://friend-finder-69982.appspot.com/');
-
-  // StorageUploadTask _uploadTask;
 
   List all = ["Music", "Dance", "Act", "Hi", "jajl", "adfajk", "ajhkdj"];
   List<String> languages = [
@@ -50,42 +46,13 @@ class _RegistrationState extends State<Registration> {
 
   _RegistrationState({this.uid});
 
-  // void _startUpload() async{
-
-  //   /// Unique file name for the file
-  //   String filePath = 'images/${DateTime.now()}.png';
-  //    ref = _storage.ref().child(filePath);
-  //   setState(() {
-  //     _uploadTask = ref.putFile(file);
-  //   });
-
-  // }
-  // void uploadUrl() async{
-  //   url = await ref.getDownloadURL();
-  //   print(url);
-  //   // Navigator.pop(context, true);
-  // }
-  // Future<void> _pickImage(ImageSource source) async {
-  //   File selected = await ImagePicker.pickImage(source: source);
-  //   setState(() {
-  //     img = selected;
-  //   });
-  //   _startUpload();
-  //   uploadUrl();
-  // Navigator.push(
-  //             context,
-  //             MaterialPageRoute(
-  //                 builder: (context) => Uploader(
-  //                   uid: "NrZIV7Lqo1dLrFvQLZnzrPJhn8N2",
-  //                   file: selected
-  //                 )));
-  // }
+  
   Future<bool> getUser() async {
     if(load){
     load = false;
     print("in");
     http.Response res = await http.post(
-      'http://10.0.2.2:5000/get_user_profile',
+      'http://192.168.0.110:5000/get_user_profile',
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -97,18 +64,23 @@ class _RegistrationState extends State<Registration> {
 
     print("out");
     try {
-      url = map["profile_picture"];
-      bio = map["bio"];
+      bio = map["user_profile"]["bio"];
 
-      selected = map["interest"];
-      lang = map["languages"];
-      selectedDate = map["dob"];
+      selected = map["user_profile"]["interest"];
+    
+      lang = map["user_profile"]["languages"];
+      selectedDate = DateTime.parse(map["user_profile"]["dob"]);
+      url = map["user_profile"]["profile_picture"];
+
     } catch (e) {
-      print(e);
+      print("error");
     }
     if (selected == null) {
       selected = [];
     }
+    print(selectedDate);
+    print(map["user_profile"]["dob"]);
+    print(map);
     print("done");
     }
     return true;
@@ -219,7 +191,8 @@ class _RegistrationState extends State<Registration> {
                       Container(
                         padding: EdgeInsets.all(10),
                         child: RoundedInputField(
-                          hintText: "Your Bio",
+
+                          hintText: bio == null? "Your Bio" : bio,
                           onChanged: (value) {
                             bio = value;
                           },
@@ -278,7 +251,7 @@ class _RegistrationState extends State<Registration> {
                             physics: NeverScrollableScrollPhysics(),
                             gridDelegate:
                                 SliverGridDelegateWithFixedCrossAxisCount(
-                              childAspectRatio: 5,
+                              childAspectRatio: 3.5,
                               crossAxisCount: 2,
                               crossAxisSpacing: 10.0,
                               mainAxisSpacing: 10.0,
@@ -362,7 +335,7 @@ class _RegistrationState extends State<Registration> {
                               fontSize: 16.0);
                         } else {
                           http.Response res = await http.post(
-                            'http://10.0.2.2:5000/set_user_profile',
+                            'http://192.168.0.110:5000/set_user_profile',
                             headers: <String, String>{
                               'Content-Type':
                                   'application/json; charset=UTF-8',
@@ -370,7 +343,7 @@ class _RegistrationState extends State<Registration> {
                             body: jsonEncode(<String, dynamic>{
                               "name": name,
                               "bio": bio,
-                              "dob": selectedDate,
+                              "dob": selectedDate.toIso8601String(),
                               "interest": selected,
                               "user_id": uid,
                               "profile_picture": url,

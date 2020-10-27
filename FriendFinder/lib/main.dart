@@ -46,6 +46,7 @@ class MyApp extends StatelessWidget {
                   //   scaffoldBackgroundColor: Colors.white,
                   // ),
                   theme: ThemeProvider.of(context),
+                  // home: SignUpScreen(),
                   home: Registration(uid: "bMxLnAalZfgfUyLrIyrzsrH91eD3"),
                   // home: LoginScreen(),
                   // FriendDetailsPage(friend,

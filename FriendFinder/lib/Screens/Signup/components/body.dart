@@ -59,7 +59,7 @@ class _BodyState extends State<Body> {
               text: "SIGNUP",
               press: () async {
                 http.Response res = await http.post(
-                  'http://10.0.2.2:5000/register',
+                  'http://192.168.0.110:5000/register',
                   headers: <String, String>{
                     'Content-Type': 'application/json; charset=UTF-8',
                   },
