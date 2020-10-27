@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
                   //   scaffoldBackgroundColor: Colors.white,
                   // ),
                   theme: ThemeProvider.of(context),
-                  home: BottomNavigation(uid:"bMxLnAalZfgfUyLrIyrzsrH91eD3"),
+                  home: BottomNavigation(uid:"Z4EmqWseKmPR6qjCiDLUx3jCKN23"),
                   // home: Registration(uid: "bMxLnAalZfgfUyLrIyrzsrH91eD3"),
                   // home: LoginScreen(),
                   // FriendDetailsPage(friend,

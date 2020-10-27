@@ -62,18 +62,18 @@ class _FriendDetailHeaderState extends State<FriendDetailHeader> {
 
     return new Padding(
       padding: const EdgeInsets.only(top: 16.0),
-      child: new Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          new Text('90 Following', style: followerStyle),
-          new Text(
-            ' | ',
-            style: followerStyle.copyWith(
-                fontSize: 24.0, fontWeight: FontWeight.normal),
-          ),
-          new Text('100 Followers', style: followerStyle),
-        ],
-      ),
+      // child: new Row(
+      //   mainAxisAlignment: MainAxisAlignment.center,
+      //   children: <Widget>[
+      //     new Text('90 Following', style: followerStyle),
+      //     new Text(
+      //       ' | ',
+      //       style: followerStyle.copyWith(
+      //           fontSize: 24.0, fontWeight: FontWeight.normal),
+      //     ),
+      //     new Text('100 Followers', style: followerStyle),
+      //   ],
+      // ),
     );
   }
 
