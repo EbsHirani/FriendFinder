@@ -5,6 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:friendfinder/models/chat_model.dart';
 
 class ChatScreen extends StatefulWidget {
+  String uid;
+  ChatScreen({
+    this.uid
+  });
   @override
   ChatScreenState createState() {
     return new ChatScreenState();
@@ -12,6 +16,7 @@ class ChatScreen extends StatefulWidget {
 }
 
 class ChatScreenState extends State<ChatScreen> {
+  String uid;
   @override
   Widget build(BuildContext context) {
     return Scaffold(

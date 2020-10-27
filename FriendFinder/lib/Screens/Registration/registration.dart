@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:date_field/date_field.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:friendfinder/bottom_navigation.dart';
 import 'package:friendfinder/components/rounded_button.dart';
 import 'package:friendfinder/components/rounded_input_field.dart';
 import 'package:friendfinder/constants.dart';
@@ -350,7 +351,11 @@ class _RegistrationState extends State<Registration> {
                               "languages": lang,
                             }),
                           );
-                          Map map = jsonDecode(res.body);
+                          Navigator.pushAndRemoveUntil(context,  MaterialPageRoute(
+                          builder: (context) {
+                            return BottomNavigation(uid:uid);
+                          },
+                        ), (route) => false);
                         }
                       },
                     )

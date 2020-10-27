@@ -4,11 +4,15 @@ import "package:filter_list/filter_list.dart";
 import 'package:flutter/material.dart';
 
 class Explore extends StatefulWidget {
+  String uid;
+  Explore({this.uid});
   @override
-  _ExploreState createState() => _ExploreState();
+  _ExploreState createState() => _ExploreState(uid: uid);
 }
 
 class _ExploreState extends State<Explore> {
+  String uid;
+  _ExploreState({this.uid});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,7 +61,7 @@ class _ExploreState extends State<Explore> {
           InkWell(
               onTap: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => FindNewUsers()));
+                    MaterialPageRoute(builder: (context) => FindNewUsers(uid:uid)));
               },
               child: new Card(
                   color: Colors.grey[20],

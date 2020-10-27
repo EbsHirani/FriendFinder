@@ -1,16 +1,27 @@
+import 'dart:convert';
+
 import 'package:friendfinder/Screens/View_Profile/friend_details_page.dart';
 import 'package:friendfinder/Screens/View_Profile/friends/friend.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:friendfinder/models/chat_model.dart';
+import 'package:http/http.dart' as http;
+
 
 class FindNewUsers extends StatefulWidget {
+  String uid;
+  FindNewUsers({this.uid});
   @override
-  _FindNewUsersState createState() => _FindNewUsersState();
+  _FindNewUsersState createState() => _FindNewUsersState(uid:uid);
 }
 
 class _FindNewUsersState extends State<FindNewUsers> {
+  String uid;
+  _FindNewUsersState({this.uid});
   String genre, stream;
+  List li;
+  Map map;
+  bool load = true;
   Icon filterIcon = new Icon(
     Icons.filter_list,
     color: Colors.black,
@@ -23,6 +34,22 @@ class _FindNewUsersState extends State<FindNewUsers> {
     "ajfjsa",
     "adkfj",
   ];
+  Future<bool> getUsers() async {
+    if(load){
+    load = false;
+    print("in");
+    http.Response res = await http.get(
+      'http://192.168.0.110:5000/get_all_users',
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
+    map = jsonDecode(res.body);
+    li = map.keys.toList();
+    // print(li.keys);
+    }
+    return true;
+  }
   Widget getSearchBar(){
     return Padding(
       padding: const EdgeInsets.fromLTRB(8.0,18,8,18),
@@ -179,56 +206,71 @@ class _FindNewUsersState extends State<FindNewUsers> {
         children: [
           getSearchBar(),
           Expanded(
-            child: ListView.builder(
-          itemCount: dummyData.length,
+            child: FutureBuilder(
+              future: getUsers(),
+              builder: (context, snapshot) {
+                if(snapshot.hasData){
+
+                return ListView.builder(
+          itemCount: li.length,
           itemBuilder: (context, i) => new Column(
-            children: <Widget>[
-              new Divider(
-                height: 10.0,
-              ),
-              InkWell(
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => FriendDetailsPage(
-                        friend,
-                        avatarTag :'imageHero',
-                        friendStatus: "Add Friend",
-                      )));
-                },
-                child: new ListTile(
-                  leading: new CachedNetworkImage(
-                    imageUrl: dummyData[i].avatarUrl,
-                    progressIndicatorBuilder: (context, url, downloadProgress) =>
-                        CircularProgressIndicator(
-                            value: downloadProgress.progress),
-                    errorWidget: (context, url, error) => Icon(Icons.error),
+                children: <Widget>[
+                  new Divider(
+                    height: 10.0,
                   ),
-                  title: new Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      new Text(
-                        dummyData[i].name,
-                        style: new TextStyle(fontWeight: FontWeight.bold),
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => FriendDetailsPage(
+                            friend,
+                            avatarTag :'imageHero',
+                            friendStatus: "Add Friend",
+                          )));
+                    },
+                    child: new ListTile(
+                      leading: new CachedNetworkImage(
+                        imageUrl: map[li[i]]["profile_picture"] == null ?
+                        "https://miro.medium.com/max/945/1*ilC2Aqp5sZd1wi0CopD1Hw.png"
+                         :map[li[i]]["profile_picture"],
+                        progressIndicatorBuilder: (context, url, downloadProgress) =>
+                            CircularProgressIndicator(
+                                value: downloadProgress.progress),
+                        errorWidget: (context, url, error) => Icon(Icons.error),
                       ),
-                      new Text(
-                        dummyData[i].time,
-                        style: new TextStyle(color: Colors.grey, fontSize: 14.0),
+                      title: new Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          new Text(
+                            map[li[i]]["name"],
+                            style: new TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          // new Text(
+                          //   dummyData[i].time,
+                          //   style: new TextStyle(color: Colors.grey, fontSize: 14.0),
+                          // ),
+                        ],
                       ),
-                    ],
-                  ),
-                  subtitle: new Container(
-                    padding: const EdgeInsets.only(top: 5.0),
-                    child: new Text(
-                      // ignore: todo
-                      dummyData[i].message, //TODO : Status here
-                      style: new TextStyle(color: Colors.grey, fontSize: 15.0),
+                      subtitle: new Container(
+                        padding: const EdgeInsets.only(top: 5.0),
+                        child: new Text(
+                          // ignore: todo
+                          map[li[i]]["name"], //TODO : Status here
+                          style: new TextStyle(color: Colors.grey, fontSize: 15.0),
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              )
-            ],
+                  )
+                ],
           ),
-        ),
+        );
+                }
+        else{
+          return Center(
+                child: CircularProgressIndicator(),
+              );
+        }
+              }
+            ),
             )
         ],
       ),
