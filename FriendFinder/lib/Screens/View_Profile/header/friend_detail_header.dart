@@ -108,7 +108,23 @@ class _FriendDetailHeaderState extends State<FriendDetailHeader> {
               ),
             ),
           ],
-        ):Container(),
+        ):
+        (friendStatus == "Recieved"? 
+        new Padding(
+              padding: const EdgeInsets.only(
+                top: 16.0,
+                left: 16.0,
+                right: 16.0,
+              ),
+              child: 
+              _createPillButton(
+                context,
+                'Accept',
+                backgroundColor: Colors.green
+              ),
+            ):
+        Container()
+        ),
         new Padding(
           padding: const EdgeInsets.only(
             top: 16.0,
@@ -127,6 +143,13 @@ class _FriendDetailHeaderState extends State<FriendDetailHeader> {
             'Request Sent',
             backgroundColor: Colors.black,
           ):
+          friendStatus == "Recieved"?
+          _createPillButton(
+            context,
+            'Reject',
+            backgroundColor: Colors.red,
+          )
+           :
           _createPillButton(
             context,
             'Message',
@@ -169,6 +192,41 @@ class _FriendDetailHeaderState extends State<FriendDetailHeader> {
     // print(li.keys);
     
   }
+  Future acceptRequest() async {
+    
+    setState(() {
+      friendStatus = 'Request Sent';
+    });
+    print("in");
+    http.Response res = await http.post(
+      'http://192.168.0.110:5000/accept_request',
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: 
+        jsonEncode(<String,String>{
+        "user_id_sender": widget.uid,
+        "user_id_receiver": widget.friend_uid,
+
+        })
+      
+    );
+    try{
+
+      var x = jsonDecode(res.body);
+      print(x);
+    }
+    catch(e){
+      print(e);
+    }
+    setState(() {
+      friendStatus = "Message";
+    });
+    
+    // li = map.keys.toList();
+    // print(li.keys);
+    
+  }
 
   Widget _createPillButton(
     var context,
@@ -195,7 +253,7 @@ class _FriendDetailHeaderState extends State<FriendDetailHeader> {
               
               break;
             case "Message":
-            
+
             //TODO: add friend
               
               break;
@@ -203,6 +261,14 @@ class _FriendDetailHeaderState extends State<FriendDetailHeader> {
             //TODO: add friend
               Navigator.push(context, MaterialPageRoute(builder: (context) => Report()));
               break;
+            case "Accept":
+            //TODO: add friend
+              // Navigator.push(context, MaterialPageRoute(builder: (context) => Report()));
+              break;
+            case "Reject":
+
+              break;
+            
             default:
           }
         },

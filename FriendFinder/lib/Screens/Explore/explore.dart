@@ -28,7 +28,7 @@ class _ExploreState extends State<Explore> {
           InkWell(
               onTap: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => RequestsPage()));
+                    MaterialPageRoute(builder: (context) => RequestsPage(uid : uid)));
               },
               child: new Card(
                   color: Colors.grey[20],
