@@ -1,27 +1,40 @@
+import 'dart:convert';
+
 import 'package:friendfinder/Screens/Report/report.dart';
 import 'package:flutter/material.dart';
 import 'package:friendfinder/Screens/View_Profile/header/diagonally_cut_colored_image.dart';
 import 'package:friendfinder/Screens/View_Profile/friends/friend.dart';
 import 'package:meta/meta.dart';
+import 'package:http/http.dart' as http;
 
-class FriendDetailHeader extends StatelessWidget {
+
+class FriendDetailHeader extends StatefulWidget {
   static const BACKGROUND_IMAGE = 'assets/images/login_bottom.png';
 
   FriendDetailHeader(
     this.friend, {
+      this.uid,
+      this.friend_uid,
       this.friendStatus,
     @required this.avatarTag,
   });
-  final String friendStatus;
+  final String friendStatus, friend_uid, uid;
   final Friend friend;
   final Object avatarTag;
-  var screenWidth;
 
+  @override
+  _FriendDetailHeaderState createState() => _FriendDetailHeaderState(friendStatus: friendStatus, friend_uid: friend_uid, uid:uid);
+}
+
+class _FriendDetailHeaderState extends State<FriendDetailHeader> {
+  var screenWidth;
+  String friendStatus, friend_uid, uid;
+  _FriendDetailHeaderState({this.friendStatus, this.friend_uid, this.uid});
   Widget _buildDiagonalImageBackground(BuildContext context) {
 
     return new DiagonallyCutColoredImage(
       new Image.asset(
-        BACKGROUND_IMAGE,
+        FriendDetailHeader.BACKGROUND_IMAGE,
         width: screenWidth,
         height: 280.0,
         fit: BoxFit.cover,
@@ -32,9 +45,9 @@ class FriendDetailHeader extends StatelessWidget {
 
   Widget _buildAvatar() {
     return new Hero(
-      tag: avatarTag,
+      tag: widget.avatarTag,
       child: new CircleAvatar(
-        backgroundImage: new NetworkImage(friend.avatar),
+        backgroundImage: new NetworkImage(widget.friend.avatar),
         radius: 50.0,
       ),
     );
@@ -121,6 +134,40 @@ class FriendDetailHeader extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  Future<bool> sendFriendRequest() async {
+    
+    setState(() {
+      friendStatus = 'Request Sent';
+    });
+    print("in");
+    http.Response res = await http.post(
+      'http://192.168.0.110:5000/create_connection',
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: 
+        jsonEncode(<String,String>{
+        "user_id_sender": widget.uid,
+        "user_id_receiver": widget.friend_uid,
+
+        })
+      
+    );
+    try{
+
+      var x = jsonDecode(res.body);
+      print(x);
+    }
+    catch(e){
+      print(e);
+    }
+    
+    // li = map.keys.toList();
+    // print(li.keys);
+    
+    return true;
   }
 
   Widget _createPillButton(

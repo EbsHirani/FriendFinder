@@ -41,7 +41,7 @@ class _BottomNavigationState extends State<BottomNavigation> with SingleTickerPr
     super.initState();
     _pageOption =  [
       ChatScreen(),
-      FriendsListScreen(),
+      FriendsListScreen(uid:uid),
       // FriendDetailsPage(friend,
       //       avatarTag :'imageHero',
       //       friendStatus: "Add Friend",
