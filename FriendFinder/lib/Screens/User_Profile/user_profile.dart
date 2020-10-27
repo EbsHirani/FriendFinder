@@ -166,7 +166,7 @@ class _UserProfileState extends State<UserProfile> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => Registration()));
+                                    builder: (context) => Registration(uid : widget.uid)));
                             },
                             child: ProfileListItem(
                               icon: LineAwesomeIcons.question_circle,

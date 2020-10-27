@@ -61,8 +61,8 @@ class _BottomNavigationState extends State<BottomNavigation> with SingleTickerPr
         height: 45.0,
         items: <Widget>[
           Icon(Icons.home, size: 20, color: Theme.of(context).primaryColor,),
+          Icon(Icons.list, size: 20, color: Theme.of(context).primaryColor,),
           Icon(Icons.explore, size: 20, color: Theme.of(context).primaryColor,),
-          Icon(Icons.edit, size: 20, color: Theme.of(context).primaryColor,),
           Icon(Icons.account_circle, size: 20, color: Theme.of(context).primaryColor,),
           //Icon(Icons.perm_identity, size: 30),
         ],

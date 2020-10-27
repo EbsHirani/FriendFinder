@@ -18,7 +18,8 @@ import 'imageUploader.dart';
 
 class Registration extends StatefulWidget {
   String uid;
-  Registration({this.uid});
+  bool reg;
+  Registration({this.uid, this.reg = true});
   @override
   _RegistrationState createState() => _RegistrationState(uid: uid);
 }
@@ -351,11 +352,17 @@ class _RegistrationState extends State<Registration> {
                               "languages": lang,
                             }),
                           );
+                          if (widget.reg){
                           Navigator.pushAndRemoveUntil(context,  MaterialPageRoute(
                           builder: (context) {
                             return BottomNavigation(uid:uid);
                           },
                         ), (route) => false);
+
+                          }
+                          else{
+                            Navigator.pop(context);
+                          }
                         }
                       },
                     )
