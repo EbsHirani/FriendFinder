@@ -191,14 +191,14 @@ class _FindNewUsersState extends State<FindNewUsers> {
   }
   @override
   Widget build(BuildContext context) {
-    Friend friend = Friend(avatar: "https://miro.medium.com/max/945/1*ilC2Aqp5sZd1wi0CopD1Hw.png",
-     name: "Varun Magotra",
-      email: "maimadarchodhu@gmaal.com", 
-      location: "Dilli se hu benchod", 
-      friendsCount: 20,
-      desc: 'Lorem Ipsum is simply dummy text of the printing and typesetting ',
+    // Friend friend = Friend(avatar: "https://miro.medium.com/max/945/1*ilC2Aqp5sZd1wi0CopD1Hw.png",
+    //  name: "Varun Magotra",
+    //   email: "maimadarchodhu@gmaal.com", 
+    //   location: "Dilli se hu benchod", 
+    //   friendsCount: 20,
+    //   desc: 'Lorem Ipsum is simply dummy text of the printing and typesetting ',
             
-      );
+    //   );
     return Scaffold(
       appBar: AppBar(
         
@@ -209,7 +209,7 @@ class _FindNewUsersState extends State<FindNewUsers> {
       body: 
       Column(
         children: [
-          getSearchBar(),
+          // getSearchBar(),
           Expanded(
             child: FutureBuilder(
               future: getUsers(),
@@ -233,10 +233,12 @@ class _FindNewUsersState extends State<FindNewUsers> {
                           li[i]["user_profile"]["profile_picture"],
                            name: li[i]["user_profile"]["name"],
                             email: li[i]["user_profile"]["email"],
+                            likings:li[i]["user_profile"]["interest"],
                              location: "Mumbai",
                               friendsCount: 10,
                                desc: li[i]["user_profile"]["bio"]
                             ),
+                            
                             avatarTag :'imageHero',
                             friendStatus: "Add Friend",
                           )));

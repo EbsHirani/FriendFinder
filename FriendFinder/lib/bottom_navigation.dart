@@ -29,14 +29,14 @@ class _BottomNavigationState extends State<BottomNavigation> with SingleTickerPr
   var _pageOption;
   @override
   void initState() {
-    Friend friend = Friend(avatar: "https://miro.medium.com/max/945/1*ilC2Aqp5sZd1wi0CopD1Hw.png",
-     name: "Varun Magotra",
-      email: "maimadarchodhu@gmaal.com", 
-      location: "Dilli se hu benchod", 
-      friendsCount: 20,
-      desc: 'Lorem Ipsum is simply dummy text of the printing and typesetting ',
+    // Friend friend = Friend(avatar: "https://miro.medium.com/max/945/1*ilC2Aqp5sZd1wi0CopD1Hw.png",
+    //  name: "Varun Magotra",
+    //   email: "maimadarchodhu@gmaal.com", 
+    //   location: "Dilli se hu benchod", 
+    //   friendsCount: 20,
+    //   desc: 'Lorem Ipsum is simply dummy text of the printing and typesetting ',
             
-      );
+    //   );
     // TODO: implement initState
     super.initState();
     _pageOption =  [

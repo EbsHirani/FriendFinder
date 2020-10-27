@@ -53,6 +53,7 @@ class FriendDetailBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(friend.likings);
     var theme = Theme.of(context);
     var textTheme = theme.textTheme;
 

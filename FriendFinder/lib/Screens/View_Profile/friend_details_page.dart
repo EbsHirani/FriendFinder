@@ -25,6 +25,7 @@ class FriendDetailsPage extends StatefulWidget {
 class _FriendDetailsPageState extends State<FriendDetailsPage> {
   @override
   Widget build(BuildContext context) {
+    print(widget.friend.likings);
     var linearGradient = const BoxDecoration(
       gradient: const LinearGradient(
         begin: FractionalOffset.centerRight,

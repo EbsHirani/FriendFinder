@@ -62,6 +62,7 @@ class ChatScreenState extends State<ChatScreen> {
                           li[i]["user_profile"]["profile_picture"],
                            name: li[i]["user_profile"]["name"],
                             email: li[i]["user_profile"]["email"],
+                            likings : li[i]["user_profile"]["interest"],
                              location: "Mumbai",
                               friendsCount: 10,
                                desc: li[i]["user_profile"]["bio"]),

@@ -22,14 +22,14 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    Friend friend = Friend(
-      avatar: "https://miro.medium.com/max/945/1*ilC2Aqp5sZd1wi0CopD1Hw.png",
-      name: "Varun Magotra",
-      email: "maimadarchodhu@gmaal.com",
-      location: "Dilli se hu benchod",
-      friendsCount: 20,
-      desc: 'Lorem Ipsum is simply dummy text of the printing and typesetting ',
-    );
+    // Friend friend = Friend(
+    //   avatar: "https://miro.medium.com/max/945/1*ilC2Aqp5sZd1wi0CopD1Hw.png",
+    //   name: "Varun Magotra",
+    //   email: "maimadarchodhu@gmaal.com",
+    //   location: "Dilli se hu benchod",
+    //   friendsCount: 20,
+    //   desc: 'Lorem Ipsum is simply dummy text of the printing and typesetting ',
+    // );
 
     return ThemeProvider(
       initTheme: kDarkTheme,

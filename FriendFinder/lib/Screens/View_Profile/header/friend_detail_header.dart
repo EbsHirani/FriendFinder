@@ -23,13 +23,14 @@ class FriendDetailHeader extends StatefulWidget {
   final Object avatarTag;
 
   @override
-  _FriendDetailHeaderState createState() => _FriendDetailHeaderState(friendStatus: friendStatus, friend_uid: friend_uid, uid:uid);
+  _FriendDetailHeaderState createState() => _FriendDetailHeaderState(friend : friend,friendStatus: friendStatus, friend_uid: friend_uid, uid:uid);
 }
 
 class _FriendDetailHeaderState extends State<FriendDetailHeader> {
   var screenWidth;
+  Friend friend;
   String friendStatus, friend_uid, uid;
-  _FriendDetailHeaderState({this.friendStatus, this.friend_uid, this.uid});
+  _FriendDetailHeaderState({this.friend, this.friendStatus, this.friend_uid, this.uid});
   Widget _buildDiagonalImageBackground(BuildContext context) {
 
     return new DiagonallyCutColoredImage(
@@ -136,7 +137,7 @@ class _FriendDetailHeaderState extends State<FriendDetailHeader> {
     );
   }
 
-  Future<bool> sendFriendRequest() async {
+  Future sendFriendRequest() async {
     
     setState(() {
       friendStatus = 'Request Sent';
@@ -167,7 +168,6 @@ class _FriendDetailHeaderState extends State<FriendDetailHeader> {
     // li = map.keys.toList();
     // print(li.keys);
     
-    return true;
   }
 
   Widget _createPillButton(
@@ -187,6 +187,7 @@ class _FriendDetailHeaderState extends State<FriendDetailHeader> {
           switch (text) {
             case "Add Friend":
             //TODO: add friend
+            sendFriendRequest();
               
               break;
             case "Request Sent":
@@ -194,6 +195,7 @@ class _FriendDetailHeaderState extends State<FriendDetailHeader> {
               
               break;
             case "Message":
+            
             //TODO: add friend
               
               break;

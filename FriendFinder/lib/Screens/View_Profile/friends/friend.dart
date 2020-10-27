@@ -8,7 +8,8 @@ class Friend {
     @required this.email,
     @required this.location,
     @required this.friendsCount,
-    @required this.desc
+    @required this.desc,
+    @required this.likings
   });
 
   final String avatar;
@@ -18,11 +19,7 @@ class Friend {
   final int friendsCount;
   final String desc;
 
-  List<String> likings = [
-    "absd",
-      "afasd",
-      "adjkfa",
-  ];
+  List likings;
   void fromMap(Map map) {
     likings = [
       "absd",
