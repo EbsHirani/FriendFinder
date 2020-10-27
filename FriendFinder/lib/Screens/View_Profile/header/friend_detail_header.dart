@@ -197,7 +197,7 @@ class _FriendDetailHeaderState extends State<FriendDetailHeader> {
   Future acceptRequest() async {
     
     setState(() {
-      friendStatus = 'Request Sent';
+      friendStatus = 'Message';
     });
     print("in");
     http.Response res = await http.post(
@@ -207,8 +207,8 @@ class _FriendDetailHeaderState extends State<FriendDetailHeader> {
       },
       body: 
         jsonEncode(<String,String>{
-        "user_id_sender": widget.uid,
-        "user_id_receiver": widget.friend_uid,
+        "user_id_receiver": widget.uid,
+        "user_id_sender": widget.friend_uid,
 
         })
       
@@ -221,9 +221,7 @@ class _FriendDetailHeaderState extends State<FriendDetailHeader> {
     catch(e){
       print(e);
     }
-    setState(() {
-      friendStatus = "Message";
-    });
+   
     
     // li = map.keys.toList();
     // print(li.keys);
@@ -242,8 +240,8 @@ class _FriendDetailHeaderState extends State<FriendDetailHeader> {
       },
       body: 
         jsonEncode(<String,String>{
-        "user_id_sender": widget.uid,
-        "user_id_receiver": widget.friend_uid,
+        "user_id_receiver": widget.uid,
+        "user_id_sender": widget.friend_uid,
 
         })
       
@@ -308,11 +306,14 @@ class _FriendDetailHeaderState extends State<FriendDetailHeader> {
               Navigator.push(context, MaterialPageRoute(builder: (context) => Report()));
               break;
             case "Accept":
+            acceptRequest();
+            
             //TODO: add friend
 
               // Navigator.push(context, MaterialPageRoute(builder: (context) => Report()));
               break;
             case "Reject":
+            rejecttRequest();
 
               break;
             

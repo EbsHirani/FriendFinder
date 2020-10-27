@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:friendfinder/Screens/User_Profile/user_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:friendfinder/Screens/View_Profile/friend_details_page.dart';
+import 'package:friendfinder/Screens/View_Profile/friends/friend.dart';
 import 'package:friendfinder/models/chat_model.dart';
 import 'package:http/http.dart' as http;
 
@@ -72,8 +74,23 @@ class _RequestsPageState extends State<RequestsPage> {
                 ),
                 InkWell(
                   onTap: () {
+                    // print(friend_uid: li[i]["user_id"]);
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => UserProfile()));
+                        MaterialPageRoute(builder: (context) => FriendDetailsPage(
+                          Friend(avatar: li[i]["user_profile"]["profile_picture"] == null? 
+                          "https://miro.medium.com/max/945/1*ilC2Aqp5sZd1wi0CopD1Hw.png":
+                          li[i]["user_profile"]["profile_picture"],
+                           name: li[i]["user_profile"]["name"],
+                            email: li[i]["user_profile"]["email"],
+                            likings: li[i]["user_profile"]["interest"],
+                             location: "Mumbai",
+                              friendsCount: 10,
+                               desc: li[i]["user_profile"]["bio"]),
+                          uid : uid,
+                            friend_uid: li[i]["user_id"],
+                          avatarTag: 'imageHero',
+                          friendStatus: "Recieved",
+                        )));
                   },
                   child: new ListTile(
                     leading: new CachedNetworkImage(

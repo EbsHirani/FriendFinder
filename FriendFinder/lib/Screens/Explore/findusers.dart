@@ -228,6 +228,7 @@ class _FindNewUsersState extends State<FindNewUsers> {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) => FriendDetailsPage(
                             Friend(
+                              
                               avatar: li[i]["user_profile"]["profile_picture"] == null? 
                           "https://miro.medium.com/max/945/1*ilC2Aqp5sZd1wi0CopD1Hw.png":
                           li[i]["user_profile"]["profile_picture"],
@@ -238,7 +239,8 @@ class _FindNewUsersState extends State<FindNewUsers> {
                               friendsCount: 10,
                                desc: li[i]["user_profile"]["bio"]
                             ),
-                            
+                            uid : uid,
+                            friend_uid: li[i]["user_id"],
                             avatarTag :'imageHero',
                             friendStatus: "Add Friend",
                           )));

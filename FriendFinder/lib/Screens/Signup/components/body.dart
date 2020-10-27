@@ -75,7 +75,7 @@ class _BodyState extends State<Body> {
                 Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => Registration(uid: uid)));
+                        builder: (context) => Registration(uid: uid,reg : true)));
               },
             ),
             SizedBox(height: size.height * 0.03),

@@ -90,6 +90,8 @@ class FriendsListScreenState extends State<FriendsListScreen> {
                              location: "Mumbai",
                               friendsCount: 10,
                                desc: li[i]["user_profile"]["bio"]),
+                          uid : uid,
+                            friend_uid: li[i]["user_id"],
                           avatarTag: 'imageHero',
                           friendStatus: "Message",
                         )));

@@ -19,7 +19,7 @@ import 'imageUploader.dart';
 class Registration extends StatefulWidget {
   String uid;
   bool reg;
-  Registration({this.uid, this.reg = true});
+  Registration({this.uid, this.reg = false});
   @override
   _RegistrationState createState() => _RegistrationState(uid: uid);
 }
