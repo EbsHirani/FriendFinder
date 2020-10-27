@@ -48,7 +48,7 @@ class FriendsListScreenState extends State<FriendsListScreen> {
     
 
     li = jsonDecode(res.body);
-    print(li);
+    // print(li);
     
     
     
@@ -96,7 +96,9 @@ class FriendsListScreenState extends State<FriendsListScreen> {
                   },
                   child: new ListTile(
                     leading: new CachedNetworkImage(
-                      imageUrl: dummyData[i].avatarUrl,
+                      imageUrl: li[i]["user_profile"]["profile_picture"] == null ? 
+                      "https://miro.medium.com/max/945/1*ilC2Aqp5sZd1wi0CopD1Hw.png":
+                      li[i]["user_profile"]["profile_picture"],
                       progressIndicatorBuilder: (context, url, downloadProgress) =>
                           CircularProgressIndicator(
                               value: downloadProgress.progress),

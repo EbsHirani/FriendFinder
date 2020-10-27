@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:friendfinder/Screens/View_Profile/header/diagonally_cut_colored_image.dart';
 import 'package:friendfinder/Screens/View_Profile/friends/friend.dart';
 import 'package:meta/meta.dart';
+import 'package:friendfinder/Screens/ChatMessage/chat.dart';
+
 import 'package:http/http.dart' as http;
 
 
@@ -227,6 +229,42 @@ class _FriendDetailHeaderState extends State<FriendDetailHeader> {
     // print(li.keys);
     
   }
+  Future rejecttRequest() async {
+    
+    setState(() {
+      friendStatus = 'Request Sent';
+    });
+    print("in");
+    http.Response res = await http.post(
+      'http://192.168.0.110:5000/reject_request',
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: 
+        jsonEncode(<String,String>{
+        "user_id_sender": widget.uid,
+        "user_id_receiver": widget.friend_uid,
+
+        })
+      
+    );
+    try{
+
+      var x = jsonDecode(res.body);
+      print(x);
+    }
+    catch(e){
+      print(e);
+    }
+    setState(() {
+      friendStatus = "Message";
+    });
+    
+    // li = map.keys.toList();
+    // print(li.keys);
+    
+  }
+
 
   Widget _createPillButton(
     var context,
@@ -253,6 +291,14 @@ class _FriendDetailHeaderState extends State<FriendDetailHeader> {
               
               break;
             case "Message":
+            Navigator.push(context, MaterialPageRoute(builder: (context) => ChatPageView(
+                          friend: friend,
+                          uid: uid,
+                          friendId: friend_uid,
+                          name: friend.name,
+                          avatarTag: 'imageHero',
+                          friendStatus: "Message",
+                        )));
 
             //TODO: add friend
               
@@ -263,6 +309,7 @@ class _FriendDetailHeaderState extends State<FriendDetailHeader> {
               break;
             case "Accept":
             //TODO: add friend
+
               // Navigator.push(context, MaterialPageRoute(builder: (context) => Report()));
               break;
             case "Reject":
