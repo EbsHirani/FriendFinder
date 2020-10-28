@@ -12,13 +12,15 @@ import 'friends/friend.dart';
 
 class FriendsListScreen extends StatefulWidget {
   String uid;
+  ChangeNotifier notifier;
   FriendsListScreen({
+    this.notifier,
     this.uid,
   });
   
   @override
   FriendsListScreenState createState() {
-    return new FriendsListScreenState(uid : uid);
+    return new FriendsListScreenState(uid : uid, notifier:notifier);
   }
 }
 
@@ -26,7 +28,16 @@ class FriendsListScreenState extends State<FriendsListScreen> {
   String uid;
   Map map;
   List li;
-  FriendsListScreenState({this.uid});
+  ChangeNotifier notifier;
+  FriendsListScreenState({this.uid, this.notifier});
+  void initState(){
+    super.initState();
+    notifier.addListener(() { 
+      setState((){
+        load = true;
+      });
+    });
+  }
   bool load = true;
   Future<bool> getUsers() async {
     print(uid);
@@ -94,7 +105,9 @@ class FriendsListScreenState extends State<FriendsListScreen> {
                             friend_uid: li[i]["user_id"],
                           avatarTag: 'imageHero',
                           friendStatus: "Message",
-                        )));
+                        ))).then((value) {
+                  notifier.notifyListeners();
+                  });
                   },
                   child: new ListTile(
                     leading: new CachedNetworkImage(

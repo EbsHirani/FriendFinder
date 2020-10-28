@@ -10,12 +10,14 @@ import 'package:http/http.dart' as http;
 
 class ChatScreen extends StatefulWidget {
   String uid;
+  ChangeNotifier notifier;
   ChatScreen({
-    this.uid
+    this.uid,
+    this.notifier
   });
   @override
   ChatScreenState createState() {
-    return new ChatScreenState(uid : uid);
+    return new ChatScreenState(uid : uid, notifier: notifier);
   }
 }
 
@@ -24,9 +26,20 @@ class ChatScreenState extends State<ChatScreen> {
   bool load = true;
   Map map;
   List li;
+  ChangeNotifier notifier;
   ChatScreenState(
-    {this.uid}
+    {this.uid,
+    this.notifier}
   );
+
+  void initState(){
+    super.initState();
+    notifier.addListener(() { 
+      setState((){
+        load = true;
+      });
+    });
+  }
 
   Future<bool> getUsers() async {
     if(load){
@@ -84,7 +97,9 @@ class ChatScreenState extends State<ChatScreen> {
                           name: li[i]["name"],
                           avatarTag: 'imageHero',
                           friendStatus: "Message",
-                        )));
+                        ))).then((value) {
+                  notifier.notifyListeners();
+                  });
                       },
                       child: new ListTile(
                         leading: new CachedNetworkImage(

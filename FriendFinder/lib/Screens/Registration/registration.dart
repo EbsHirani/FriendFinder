@@ -27,7 +27,7 @@ class Registration extends StatefulWidget {
 class _RegistrationState extends State<Registration> {
   String bio, lang;
   File file;
-  String uid, url, name = "ebsjla", email = "adhjkda";
+  String uid, url, name, email;
   StorageReference ref;
   DateTime selectedDate;
   // File img;
@@ -80,8 +80,8 @@ class _RegistrationState extends State<Registration> {
     if (selected == null) {
       selected = [];
     }
-    print(selectedDate);
-    print(map["user_profile"]["dob"]);
+    // print(selectedDate);
+    // print(map["user_profile"]["dob"]);
     print(map);
     print("done");
     }
@@ -110,8 +110,7 @@ class _RegistrationState extends State<Registration> {
       url = (await firebaseStorageRef.getDownloadURL()).toString();
       setState(() {
         print("Profile Picture uploaded");
-        Scaffold.of(context)
-            .showSnackBar(SnackBar(content: Text('Profile Picture Uploaded')));
+        
       });
     }
 

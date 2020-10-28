@@ -57,7 +57,7 @@ class _RequestsPageState extends State<RequestsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Friend List"),
+        title: Text("Requests List"),
         elevation: 0.7,
       ),
       body: FutureBuilder(
@@ -90,7 +90,11 @@ class _RequestsPageState extends State<RequestsPage> {
                             friend_uid: li[i]["user_id"],
                           avatarTag: 'imageHero',
                           friendStatus: "Recieved",
-                        )));
+                        ))).then((value) {
+                  setState(() {
+                    load = true;
+                  });
+                  });
                   },
                   child: new ListTile(
                     leading: new CachedNetworkImage(

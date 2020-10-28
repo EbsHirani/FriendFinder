@@ -243,7 +243,11 @@ class _FindNewUsersState extends State<FindNewUsers> {
                             friend_uid: li[i]["user_id"],
                             avatarTag :'imageHero',
                             friendStatus: "Add Friend",
-                          )));
+                          ))).then((value) {
+                  setState(() {
+                    load = true;
+                  });
+                  });
                     },
                     child: new ListTile(
                       leading: new CachedNetworkImage(

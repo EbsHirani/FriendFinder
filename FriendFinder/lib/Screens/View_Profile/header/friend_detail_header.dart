@@ -201,7 +201,7 @@ class _FriendDetailHeaderState extends State<FriendDetailHeader> {
     });
     print("in");
     http.Response res = await http.post(
-      'http://192.168.0.110:5000/accept_request',
+      'http://192.168.0.110:5000/accept_connection',
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -230,11 +230,11 @@ class _FriendDetailHeaderState extends State<FriendDetailHeader> {
   Future rejecttRequest() async {
     
     setState(() {
-      friendStatus = 'Request Sent';
+      friendStatus = 'Add Friend';
     });
     print("in");
     http.Response res = await http.post(
-      'http://192.168.0.110:5000/reject_request',
+      'http://192.168.0.110:5000/reject_connection',
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -254,9 +254,53 @@ class _FriendDetailHeaderState extends State<FriendDetailHeader> {
     catch(e){
       print(e);
     }
+   
+    
+    // li = map.keys.toList();
+    // print(li.keys);
+    
+  }
+  Future removeFriend() async {
+    
     setState(() {
-      friendStatus = "Message";
+      friendStatus = 'Add Friend';
     });
+    print("in");
+    http.Response res = await http.post(
+      'http://192.168.0.110:5000/reject_connection',
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: 
+        jsonEncode(<String,String>{
+        "user_id_receiver": widget.uid,
+        "user_id_sender": widget.friend_uid,
+
+        })
+      
+    );
+    res = await http.post(
+      'http://192.168.0.110:5000/reject_connection',
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: 
+        jsonEncode(<String,String>{
+        "user_id_receiver": widget.friend_uid,
+        "user_id_sender": widget.uid,
+
+        })
+      
+    );
+    try{
+
+      var x = jsonDecode(res.body);
+      print(x);
+    }
+    catch(e){
+      print(e);
+    }
+   
     
     // li = map.keys.toList();
     // print(li.keys);
@@ -312,6 +356,10 @@ class _FriendDetailHeaderState extends State<FriendDetailHeader> {
 
               // Navigator.push(context, MaterialPageRoute(builder: (context) => Report()));
               break;
+            case 'UnFriend':
+            removeFriend();
+
+            break;
             case "Reject":
             rejecttRequest();
 

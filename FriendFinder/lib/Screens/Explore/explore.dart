@@ -5,14 +5,24 @@ import 'package:flutter/material.dart';
 
 class Explore extends StatefulWidget {
   String uid;
-  Explore({this.uid});
+  ChangeNotifier notifier;
+  Explore({this.uid, this.notifier});
   @override
-  _ExploreState createState() => _ExploreState(uid: uid);
+  _ExploreState createState() => _ExploreState(uid: uid, notifier: notifier);
 }
 
 class _ExploreState extends State<Explore> {
   String uid;
-  _ExploreState({this.uid});
+  ChangeNotifier notifier;
+  _ExploreState({this.uid, this.notifier});
+  void initState(){
+    super.initState();
+    notifier.addListener(() { 
+      setState((){
+        
+      });
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +38,9 @@ class _ExploreState extends State<Explore> {
           InkWell(
               onTap: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => RequestsPage(uid : uid)));
+                    MaterialPageRoute(builder: (context) => RequestsPage(uid : uid))).then((value) {
+                  notifier.notifyListeners();
+                  });
               },
               child: new Card(
                   color: Colors.grey[20],
@@ -61,7 +73,9 @@ class _ExploreState extends State<Explore> {
           InkWell(
               onTap: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => FindNewUsers(uid:uid)));
+                    MaterialPageRoute(builder: (context) => FindNewUsers(uid:uid))).then((value) {
+                  notifier.notifyListeners();
+                  });
               },
               child: new Card(
                   color: Colors.grey[20],

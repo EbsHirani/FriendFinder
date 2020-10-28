@@ -25,6 +25,8 @@ class _BottomNavigationState extends State<BottomNavigation> with SingleTickerPr
   String uid;
   _BottomNavigationState({this.uid});
   int _page = 0;
+  ChangeNotifier notif = ChangeNotifier();
+
 
   var _pageOption;
   @override
@@ -40,13 +42,13 @@ class _BottomNavigationState extends State<BottomNavigation> with SingleTickerPr
     // TODO: implement initState
     super.initState();
     _pageOption =  [
-      ChatScreen(uid : uid),
-      FriendsListScreen(uid:uid),
+      ChatScreen(uid : uid, notifier: notif,),
+      FriendsListScreen(uid:uid, notifier : notif),
       // FriendDetailsPage(friend,
       //       avatarTag :'imageHero',
       //       friendStatus: "Add Friend",
       //     ),
-      Explore(uid:uid),
+      Explore(uid:uid, notifier: notif,),
       UserProfile(uid : uid),
     ];
   }

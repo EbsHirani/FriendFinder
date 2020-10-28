@@ -4,6 +4,7 @@ import 'package:friendfinder/Screens/Registration/registration.dart';
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:friendfinder/Screens/Welcome/welcome_screen.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:friendfinder/constants.dart';
 import 'package:friendfinder/widgets/profile_list_item.dart';
@@ -174,10 +175,16 @@ class _UserProfileState extends State<UserProfile> {
                             ),
                           ),
                           
-                          ProfileListItem(
-                            icon: LineAwesomeIcons.alternate_sign_out,
-                            text: 'Logout',
-                            hasNavigation: false,
+                          InkWell(
+                            onTap:(){
+                              Navigator.pushAndRemoveUntil(context,  MaterialPageRoute(
+                                    builder: (context) => WelcomeScreen()), (route) => false);
+                            },
+                            child: ProfileListItem(
+                              icon: LineAwesomeIcons.alternate_sign_out,
+                              text: 'Logout',
+                              hasNavigation: false,
+                            ),
                           ),
                         ],
                       ),
