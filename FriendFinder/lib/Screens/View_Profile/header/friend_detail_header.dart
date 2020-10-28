@@ -347,7 +347,11 @@ class _FriendDetailHeaderState extends State<FriendDetailHeader> {
               break;
             case "Report":
             //TODO: add friend
-              Navigator.push(context, MaterialPageRoute(builder: (context) => Report()));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => Report(
+                name: friend.name,
+                friend_uid: friend_uid,
+                uid: uid,
+              )));
               break;
             case "Accept":
             acceptRequest();

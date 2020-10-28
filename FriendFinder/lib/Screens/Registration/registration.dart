@@ -151,10 +151,13 @@ class _RegistrationState extends State<Registration> {
                                     width: 180,
                                     height: 180,
                                     child: _image == null
-                                        ? Image.asset(
+                                        ? 
+                                        (url == null?
+                                        Image.asset(
                                             'assets/images/avatar.png',
-                                            fit: BoxFit.fill)
-                                        : Image.file(_image, fit: BoxFit.fill)),
+                                            fit: BoxFit.fill):
+                                          Image.network(url,fit: BoxFit.fill ))
+                                        :  Image.file(_image, fit: BoxFit.fill)),
                               ),
                               Align(
                                 alignment: Alignment.bottomRight,
