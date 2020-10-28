@@ -68,6 +68,7 @@ class _ReportState extends State<Report> {
                 })
             
           );
+          Navigator.pop(context);
 
            }
               
