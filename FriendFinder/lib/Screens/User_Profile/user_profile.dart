@@ -22,7 +22,7 @@ class UserProfile extends StatefulWidget {
 class _UserProfileState extends State<UserProfile> {
   bool load = true;
 
-  String name, email;
+  String name, email, url;
 
   Future<bool> getUser() async {
     if(load){
@@ -38,7 +38,12 @@ class _UserProfileState extends State<UserProfile> {
     Map map = jsonDecode(res.body);
     name = map["name"];
     email = map["email_id"];
+    try{
+      url = map["user_profile"]["profile_picture"];
+    }
+    catch(e){
 
+    }
     print("out");
     
     }
@@ -100,7 +105,7 @@ class _UserProfileState extends State<UserProfile> {
               children: [
                 CircleAvatar(
                   radius: kSpacingUnit.w * 5,
-                  backgroundImage: AssetImage('assets/images/avatar.png'),
+                  child : url == null ?Image.asset('assets/images/avatar.png'):Image.network(url),
                 ),
                 // Align(
                 //   alignment: Alignment.bottomRight,
